@@ -1,2 +1,2 @@
 # ShuYou-Framework
-Microservice General Permission Management System‌
+Microservice General Permission Management System
