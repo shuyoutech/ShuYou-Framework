@@ -1,6 +1,7 @@
 package com.shuyoutech.api.service;
 
 import com.shuyoutech.api.model.LoginUser;
+import com.shuyoutech.api.model.RemoteSysFile;
 
 import java.util.Map;
 import java.util.Set;
@@ -23,4 +24,11 @@ public interface RemoteSystemService {
 
     Set<String> getRolePermission(String userId);
 
+    RemoteSysFile getFileById(String fileId);
+
+    String getFilePath(String fileId);
+
+    String generatedUrl(String ossId, Long expiration);
+
+    RemoteSysFile upload(String originalFilename, byte[] data);
 }

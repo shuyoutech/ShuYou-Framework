@@ -74,6 +74,7 @@
     <modules>
         <module>shuyou-common</module>
         <module>shuyou-api</module>
+        <module>shuyou-module</module>
     </modules>
 
     <!--  统一管理公共jar包引用 start -->
@@ -185,12 +186,17 @@
             <!-- ShuYou -->
             <dependency>
                 <groupId>com.shuyoutech</groupId>
+                <artifactId>shuyou-common-cache</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.shuyoutech</groupId>
                 <artifactId>shuyou-common-core</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.shuyoutech</groupId>
-                <artifactId>shuyou-common-redis</artifactId>
+                <artifactId>shuyou-common-disruptor</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
@@ -200,12 +206,17 @@
             </dependency>
             <dependency>
                 <groupId>com.shuyoutech</groupId>
-                <artifactId>shuyou-common-cache</artifactId>
+                <artifactId>shuyou-common-redis</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.shuyoutech</groupId>
                 <artifactId>shuyou-common-satoken</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.shuyoutech</groupId>
+                <artifactId>shuyou-common-web</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
