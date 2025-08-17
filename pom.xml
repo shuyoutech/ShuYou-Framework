@@ -111,6 +111,7 @@
         <module>shuyou-disruptor-starter</module>
         <module>shuyou-mybatis-starter</module>
         <module>shuyou-satoken-starter</module>
+        <module>shuyou-elasticsearch-starter</module>
     </modules>
 
     <!--  统一管理公共jar包引用 start -->
