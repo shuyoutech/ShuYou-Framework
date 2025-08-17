@@ -73,6 +73,11 @@
                 <artifactId>shuyou-redis-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.shuyoutech</groupId>
+                <artifactId>shuyou-satoken-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

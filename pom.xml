@@ -61,6 +61,7 @@
         <lombok.version>1.18.38</lombok.version>
         <springdoc.version>2.8.9</springdoc.version>
         <hutool.version>5.8.38</hutool.version>
+        <mysql.version>9.3.0</mysql.version>
         <mybatis-plus.version>3.5.12</mybatis-plus.version>
         <p6spy.version>1.12.0</p6spy.version>
         <mapstruct-plus.version>1.4.8</mapstruct-plus.version>
@@ -98,6 +99,7 @@
         <wechatpay.version>0.2.17</wechatpay.version>
         <openai-java.version>3.0.0</openai-java.version>
         <java-jwt.version>4.5.0</java-jwt.version>
+        <hikaricp.version>6.3.1</hikaricp.version>
     </properties>
 
     <modules>
@@ -107,6 +109,8 @@
         <module>shuyou-mongodb-starter</module>
         <module>shuyou-cache-starter</module>
         <module>shuyou-disruptor-starter</module>
+        <module>shuyou-mybatis-starter</module>
+        <module>shuyou-satoken-starter</module>
     </modules>
 
     <!--  统一管理公共jar包引用 start -->
@@ -114,19 +118,16 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-       <!--     <version>1.18.38</version>-->
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-core-jakarta</artifactId>
-        <!--    <version>2.2.30</version>-->
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-       <!--     <version>2.0.17</version>-->
             <scope>compile</scope>
         </dependency>
     </dependencies>
