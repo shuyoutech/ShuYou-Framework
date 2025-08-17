@@ -9,30 +9,56 @@
     <version>${revision}</version>
     <packaging>pom</packaging>
 
-    <name>${project.groupId}:${project.artifactId}</name>
-    <url>https://github.com/shuyoutech/ShuYou-Framework.git</url>
+    <name>shuyou-framework</name>
     <description>ShuYou-Framework</description>
+    <url>https://github.com/shuyoutech/ShuYou-Framework</url>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>shuyoutech</id>
+            <name>Chao Yang</name>
+            <email>yangchao@szshuyou.com</email>
+            <roles>
+                <role>Project Manager</role>
+                <role>Architect</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>https://github.com/shuyoutech/ShuYou-Framework.git</connection>
+        <developerConnection>scm:git@github.com:shuyoutech/ShuYou-Framework.git</developerConnection>
+        <url>https://github.com/shuyoutech/ShuYou-Framework</url>
+    </scm>
 
     <properties>
-        <!-- Project Maven -->
+        <!-- ShuYou Version -->
         <revision>2025.0.0.0</revision>
+
+        <!-- Maven project basic config -->
         <java.version>21</java.version>
         <resource.delimiter>@</resource.delimiter>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
+        <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
 
         <!-- Spring Boot Cloud Alibaba -->
         <spring-boot.version>3.5.4</spring-boot.version>
         <spring-cloud.version>2025.0.0</spring-cloud.version>
         <spring-cloud-alibaba.version>2023.0.3.3</spring-cloud-alibaba.version>
 
-        <!-- 插件版本 -->
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-        <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
-        <lombok.version>1.18.38</lombok.version>
-
         <!-- open common tool -->
+        <lombok.version>1.18.38</lombok.version>
         <springdoc.version>2.8.9</springdoc.version>
         <hutool.version>5.8.38</hutool.version>
         <mybatis-plus.version>3.5.12</mybatis-plus.version>
@@ -41,6 +67,8 @@
         <mapstruct-plus.lombok.version>0.2.0</mapstruct-plus.lombok.version>
         <disruptor.version>4.0.0</disruptor.version>
         <fastjson2.version>2.0.58</fastjson2.version>
+        <jakarta-servlet.version>6.0.0</jakarta-servlet.version>
+        <caffeine.version>3.2.2</caffeine.version>
         <dubbo.version>3.3.5</dubbo.version>
         <transmittable-thread-local.version>2.14.5</transmittable-thread-local.version>
         <jjwt.version>0.12.7</jjwt.version>
@@ -69,12 +97,16 @@
         <protobuf.version>3.19.6</protobuf.version>
         <wechatpay.version>0.2.17</wechatpay.version>
         <openai-java.version>3.0.0</openai-java.version>
+        <java-jwt.version>4.5.0</java-jwt.version>
     </properties>
 
     <modules>
-        <module>shuyou-common</module>
-        <module>shuyou-api</module>
-        <module>shuyou-module</module>
+        <module>shuyou-bom</module>
+        <module>shuyou-core</module>
+        <module>shuyou-redis-starter</module>
+        <module>shuyou-mongodb-starter</module>
+        <module>shuyou-cache-starter</module>
+        <module>shuyou-disruptor-starter</module>
     </modules>
 
     <!--  统一管理公共jar包引用 start -->
@@ -82,16 +114,19 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+       <!--     <version>1.18.38</version>-->
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-core-jakarta</artifactId>
+        <!--    <version>2.2.30</version>-->
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+       <!--     <version>2.0.17</version>-->
             <scope>compile</scope>
         </dependency>
     </dependencies>
@@ -181,53 +216,6 @@
                 <version>${dubbo.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-
-            <!-- ShuYou -->
-            <dependency>
-                <groupId>com.shuyoutech</groupId>
-                <artifactId>shuyou-common-cache</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.shuyoutech</groupId>
-                <artifactId>shuyou-common-core</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.shuyoutech</groupId>
-                <artifactId>shuyou-common-disruptor</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.shuyoutech</groupId>
-                <artifactId>shuyou-common-mongodb</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.shuyoutech</groupId>
-                <artifactId>shuyou-common-redis</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.shuyoutech</groupId>
-                <artifactId>shuyou-common-satoken</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.shuyoutech</groupId>
-                <artifactId>shuyou-common-web</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.shuyoutech</groupId>
-                <artifactId>shuyou-api-model</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.shuyoutech</groupId>
-                <artifactId>shuyou-api-service</artifactId>
-                <version>${revision}</version>
             </dependency>
 
             <!-- Hu tool java工具类库 -->
@@ -501,45 +489,28 @@
                 <artifactId>okhttp-sse</artifactId>
                 <version>${okhttp.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>${java-jwt.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>shuyoutech</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>shuyoutech</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                    <compilerArgument>-parameters</compilerArgument>
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                            <version>${lombok.version}</version>
-                        </path>
-                        <path>
-                            <groupId>org.springframework.boot</groupId>
-                            <artifactId>spring-boot-configuration-processor</artifactId>
-                            <version>${spring-boot.version}</version>
-                        </path>
-                        <path>
-                            <groupId>io.github.linpeilie</groupId>
-                            <artifactId>mapstruct-plus-processor</artifactId>
-                            <version>${mapstruct-plus.version}</version>
-                        </path>
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok-mapstruct-binding</artifactId>
-                            <version>${mapstruct-plus.lombok.version}</version>
-                        </path>
-                    </annotationProcessorPaths>
-                </configuration>
-            </plugin>
-        </plugins>
+        <finalName>${project.artifactId}</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -558,6 +529,90 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+        <plugins>
+            <!--   source源码插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--   javadoc插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.11.2</version>
+                <configuration>
+                    <additionalJOption>-Xdoclint:none</additionalJOption>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <configuration>
+                            <executable>/usr/local/bin/gpg</executable>
+                            <keyname>yangchao</keyname>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>0.8.0</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <publishingServerId>shuyoutech</publishingServerId>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

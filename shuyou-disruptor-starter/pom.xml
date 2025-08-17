@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.shuyoutech</groupId>
+        <artifactId>shuyou-framework</artifactId>
+        <version>2025.0.0.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>shuyou-disruptor-starter</artifactId>
+    <packaging>jar</packaging>
+    <name>ShuYou Disruptor Starter</name>
+    <description>ShuYou Disruptor Starter</description>
+    <url>https://github.com/shuyoutech/ShuYou-Framework</url>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>shuyoutech</id>
+            <name>Chao Yang</name>
+            <email>yangchao@szshuyou.com</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>https://github.com/shuyoutech/ShuYou-Framework.git</connection>
+        <developerConnection>scm:git@github.com:shuyoutech/ShuYou-Framework.git</developerConnection>
+        <url>https://github.com/shuyoutech/ShuYou-Framework</url>
+    </scm>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.shuyoutech</groupId>
+            <artifactId>shuyou-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lmax</groupId>
+            <artifactId>disruptor</artifactId>
+            <version>${disruptor.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

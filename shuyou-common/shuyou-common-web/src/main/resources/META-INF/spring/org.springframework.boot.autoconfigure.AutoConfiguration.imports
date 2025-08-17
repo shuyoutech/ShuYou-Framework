@@ -1,5 +1,0 @@
-com.shuyoutech.common.web.config.AsyncConfig
-com.shuyoutech.common.web.config.ValidatorConfig
-com.shuyoutech.common.web.config.WebConfig
-com.shuyoutech.common.web.runnable.CustomizerBanner
-com.shuyoutech.common.web.config.RateLimiterConfig
