@@ -276,6 +276,9 @@ public class MongoUtils {
      * @return 集合对象
      */
     public static <E extends BaseEntity<E>> List<E> getByIds(Collection<? extends Serializable> idList, Class<E> clazz) {
+        if (CollectionUtils.isEmpty(idList)) {
+            return null;
+        }
         Query query = new Query(Criteria.where(EntityConstants.NOSQL_ID).in(idList));
         List<E> list = mongoTemplate.find(query, clazz);
         if (CollectionUtils.isEmpty(list)) {
