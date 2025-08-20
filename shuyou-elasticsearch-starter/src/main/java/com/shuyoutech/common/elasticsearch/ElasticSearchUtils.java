@@ -22,6 +22,8 @@ import java.util.stream.Collectors;
 
 /**
  * ElasticSearch工具类
+ * <a href="https://www.elastic.co/docs/reference/elasticsearch/clients/java/getting-started">...</a>
+ * <a href="https://github.com/elastic/elasticsearch">...</a>
  *
  * @author YangChao
  * @date 2025-08-13 20:52
