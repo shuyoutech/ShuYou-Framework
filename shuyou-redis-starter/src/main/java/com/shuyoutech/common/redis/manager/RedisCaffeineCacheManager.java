@@ -1,6 +1,6 @@
-package com.shuyoutech.common.cache.manager;
+package com.shuyoutech.common.redis.manager;
 
-import com.shuyoutech.common.cache.config.properties.CacheProperties;
+import com.shuyoutech.common.redis.config.properties.CacheProperties;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.redis.core.RedisTemplate;

@@ -36,7 +36,7 @@ public interface CacheConstants {
     /**
      * 小程序access_token有效期
      */
-    String MINI_PROGRAM_TOKEN_KEY = "mini_program_token:";
+    String MINI_PROGRAM_TOKEN_KEY = "mini_program_token";
 
     /**
      * 缓存-社交客户信息

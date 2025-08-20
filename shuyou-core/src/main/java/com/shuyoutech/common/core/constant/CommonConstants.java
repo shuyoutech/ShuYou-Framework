@@ -114,6 +114,11 @@ public interface CommonConstants {
     String USER_TYPE = "user_type";
 
     /**
+     * 用户第三方唯一标识字段
+     */
+    String USER_OPENID = "user_openid";
+
+    /**
      * 编码 ISO-8859-1
      */
     String CHARSET_ISO_8859_1 = "ISO-8859-1";

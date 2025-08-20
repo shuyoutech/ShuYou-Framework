@@ -1,4 +1,4 @@
-package com.shuyoutech.common.cache.config.properties;
+package com.shuyoutech.common.redis.config.properties;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -13,7 +13,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class CacheProperties {
 
     @Schema(description = "缓存名称")
-    private String name;
+    private String name = "shuyoutech";
 
     @Schema(description = "是否允许控制")
     private Boolean allowNull = true;

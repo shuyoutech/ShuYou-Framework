@@ -50,11 +50,6 @@
         <dependencies>
             <dependency>
                 <groupId>com.shuyoutech</groupId>
-                <artifactId>shuyou-cache-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.shuyoutech</groupId>
                 <artifactId>shuyou-core</artifactId>
                 <version>${project.version}</version>
             </dependency>

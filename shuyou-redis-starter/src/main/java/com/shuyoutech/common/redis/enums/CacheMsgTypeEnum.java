@@ -1,4 +1,4 @@
-package com.shuyoutech.common.cache.enums;
+package com.shuyoutech.common.redis.enums;
 
 import com.shuyoutech.common.core.enums.BaseEnum;
 import lombok.AllArgsConstructor;

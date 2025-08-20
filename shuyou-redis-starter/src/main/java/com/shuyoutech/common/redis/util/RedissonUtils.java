@@ -1,13 +1,11 @@
 package com.shuyoutech.common.redis.util;
 
-import com.shuyoutech.common.core.util.CollectionUtils;
 import com.shuyoutech.common.core.util.SpringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.*;
 import org.redisson.api.listener.MessageListener;
 import org.redisson.api.listener.PatternMessageListener;
 import org.redisson.api.options.KeysScanOptions;
-import org.redisson.api.options.KeysScanParams;
 
 import java.time.Duration;
 import java.util.Collection;
@@ -17,6 +15,8 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.shuyoutech.common.redis.constant.CacheConstants.PAY_WALLET_LOCK;
 
@@ -48,8 +48,22 @@ public class RedissonUtils {
      * @return -1 表示失败
      */
     public static long rateLimiter(String key, RateType rateType, int rate, int rateInterval) {
+        return rateLimiter(key, rateType, rate, rateInterval, 0);
+    }
+
+    /**
+     * 限流
+     *
+     * @param key          限流key
+     * @param rateType     限流类型
+     * @param rate         速率
+     * @param rateInterval 速率间隔
+     * @param timeout      超时时间
+     * @return -1 表示失败
+     */
+    public static long rateLimiter(String key, RateType rateType, int rate, int rateInterval, int timeout) {
         RRateLimiter rateLimiter = REDISSON_CLIENT.getRateLimiter(key);
-        rateLimiter.trySetRate(rateType, rate, Duration.ofSeconds(rateInterval));
+        rateLimiter.trySetRate(rateType, rate, Duration.ofSeconds(rateInterval), Duration.ofSeconds(timeout));
         if (rateLimiter.tryAcquire()) {
             return rateLimiter.availablePermits();
         } else {
@@ -130,7 +144,11 @@ public class RedissonUtils {
                 bucket.setAndKeepTTL(value);
             } catch (Exception e) {
                 long timeToLive = bucket.remainTimeToLive();
-                setCacheObject(key, value, Duration.ofMillis(timeToLive));
+                if (timeToLive == -1) {
+                    bucket.set(value);
+                } else {
+                    bucket.set(value, Duration.ofMillis(timeToLive));
+                }
             }
         } else {
             bucket.set(value);
@@ -145,11 +163,8 @@ public class RedissonUtils {
      * @param duration 时间
      */
     public static <T> void setCacheObject(final String key, final T value, final Duration duration) {
-        RBatch batch = REDISSON_CLIENT.createBatch();
-        RBucketAsync<T> bucket = batch.getBucket(key);
-        bucket.setAsync(value);
-        bucket.expireAsync(duration);
-        batch.execute();
+        RBucket<T> bucket = REDISSON_CLIENT.getBucket(key);
+        bucket.set(value, duration);
     }
 
     /**
@@ -516,16 +531,37 @@ public class RedissonUtils {
     }
 
     /**
-     * 获得缓存的基本对象列表
+     * 获得缓存的基本对象列表(全局匹配忽略租户 自行拼接租户id)
+     * <p>
+     * limit-设置扫描的限制数量(默认为0,查询全部)
+     * pattern-设置键的匹配模式(默认为null)
+     * chunkSize-设置每次扫描的块大小(默认为0,本方法设置为1000)
+     * type-设置键的类型(默认为null,查询全部类型)
+     * </P>
      *
      * @param pattern 字符串前缀
      * @return 对象列表
+     * @see KeysScanOptions
      */
     public static Collection<String> keys(final String pattern) {
-        KeysScanOptions options = new KeysScanParams();
-        options.pattern(pattern);
-        Iterable<String> iterable = REDISSON_CLIENT.getKeys().getKeys(options);
-        return CollectionUtils.toCollection(iterable);
+        return keys(KeysScanOptions.defaults().pattern(pattern).chunkSize(1000));
+    }
+
+    /**
+     * 通过扫描参数获取缓存的基本对象列表
+     *
+     * @param keysScanOptions 扫描参数
+     *                        <p>
+     *                        limit-设置扫描的限制数量(默认为0,查询全部)
+     *                        pattern-设置键的匹配模式(默认为null)
+     *                        chunkSize-设置每次扫描的块大小(默认为0)
+     *                        type-设置键的类型(默认为null,查询全部类型)
+     *                        </P>
+     * @see KeysScanOptions
+     */
+    public static Collection<String> keys(final KeysScanOptions keysScanOptions) {
+        Stream<String> keysStream = REDISSON_CLIENT.getKeys().getKeysStream(keysScanOptions);
+        return keysStream.collect(Collectors.toList());
     }
 
     /**
@@ -555,7 +591,6 @@ public class RedissonUtils {
         RLock lock = REDISSON_CLIENT.getLock(lockKey);
         try {
             lock.lock(timeoutMillis, TimeUnit.MILLISECONDS);
-            // 执行逻辑
             return callable.call();
         } catch (Exception e) {
             log.error("lock =============== error:{}", e.getMessage());

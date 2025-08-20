@@ -1,4 +1,4 @@
-package com.shuyoutech.common.cache.util;
+package com.shuyoutech.common.redis.util;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.shuyoutech.common.core.util.SpringUtils;

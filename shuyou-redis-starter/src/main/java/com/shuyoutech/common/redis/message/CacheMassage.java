@@ -1,6 +1,6 @@
-package com.shuyoutech.common.cache.message;
+package com.shuyoutech.common.redis.message;
 
-import com.shuyoutech.common.cache.enums.CacheMsgTypeEnum;
+import com.shuyoutech.common.redis.enums.CacheMsgTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

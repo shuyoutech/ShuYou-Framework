@@ -1,9 +1,9 @@
-package com.shuyoutech.common.cache.config;
+package com.shuyoutech.common.redis.config;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
-import com.shuyoutech.common.cache.config.properties.CacheProperties;
-import com.shuyoutech.common.cache.manager.RedisCaffeineCacheManager;
-import com.shuyoutech.common.cache.message.CacheMessageListener;
+import com.shuyoutech.common.redis.config.properties.CacheProperties;
+import com.shuyoutech.common.redis.manager.RedisCaffeineCacheManager;
+import com.shuyoutech.common.redis.message.CacheMessageListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

@@ -1,11 +1,8 @@
 package com.shuyoutech.common.satoken.util;
 
-import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.shuyoutech.common.core.constant.CommonConstants;
-import com.shuyoutech.common.core.exception.BusinessException;
 import com.shuyoutech.common.core.util.StringUtils;
 import com.shuyoutech.common.satoken.constant.AuthConstants;
 import com.shuyoutech.common.satoken.model.LoginUser;
@@ -19,26 +16,17 @@ import lombok.extern.slf4j.Slf4j;
 public class AuthUtils {
 
     /**
-     * 获取当前登录用户信息
+     * 获取当前admin端管理登录用户信息
      */
     public static LoginUser getLoginUser() {
-        return getLoginUser(true);
+        return JSONObject.parseObject(JSONObject.toJSONString(StpUtil.getTokenSession().get(AuthConstants.LOGIN_USER)), LoginUser.class);
     }
 
     /**
-     * 获取当前登录用户信息
+     * 获取当前app端登录用户信息
      */
-    public static LoginUser getLoginUser(boolean error) {
-        try {
-            return JSONObject.parseObject(JSONObject.toJSONString(StpUtil.getTokenSession().get(AuthConstants.LOGIN_USER)), LoginUser.class);
-        } catch (Exception e) {
-            log.error("getLoginUser error:{}", e.getMessage());
-            if (error) {
-                throw new BusinessException(403, "登录已失效，请重新登陆");
-            } else {
-                return null;
-            }
-        }
+    public static JSONObject getAppLoginUser() {
+        return JSONObject.parseObject(JSONObject.toJSONString(StpUtil.getTokenSession().get(AuthConstants.LOGIN_USER)));
     }
 
     /**
@@ -66,25 +54,18 @@ public class AuthUtils {
     }
 
     /**
-     * 获取当前登录用户组织ID
+     * 获取当前登录用户第三方唯一标识
      */
-    public static String getLoginOrgId() {
-        LoginUser loginUser = getLoginUser(false);
-        if (null == loginUser) {
-            return null;
-        }
-        return loginUser.getOrgId();
+    public static String getLoginUserOpenid() {
+        Object openid = StpUtil.getExtra(CommonConstants.USER_OPENID);
+        return StringUtils.toStringOrEmpty(openid);
     }
 
     /**
-     * 获取用户基于token
+     * 获取当前登录用户组织ID
      */
-    public static LoginUser getLoginUser(String token) {
-        SaSession session = StpUtil.getTokenSessionByToken(token);
-        if (ObjectUtil.isNull(session)) {
-            return null;
-        }
-        return session.getModel(AuthConstants.LOGIN_USER, LoginUser.class);
+    public static String getLoginOrgId() {
+        return getLoginUser().getOrgId();
     }
 
 }

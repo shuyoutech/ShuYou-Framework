@@ -3,11 +3,9 @@ package com.shuyoutech.common.redis.util;
 import com.shuyoutech.common.core.util.CollectionUtils;
 import com.shuyoutech.common.core.util.ConvertUtils;
 import com.shuyoutech.common.core.util.SpringUtils;
-import com.shuyoutech.common.core.util.StringUtils;
 import com.shuyoutech.common.redis.model.RedisMessage;
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.*;
-import org.springframework.data.redis.support.atomic.RedisAtomicLong;
 
 import java.time.Duration;
 import java.util.*;
@@ -1370,17 +1368,6 @@ public class RedisUtils {
      */
     public static void convertAndSend(String channel, RedisMessage message) {
         redisTemplate.convertAndSend(channel, message);
-    }
-
-    /**
-     * 根据当天生成自增流水号
-     *
-     * @return 流水号
-     */
-    public static String genSerialNumber(String key, Long timeout, TimeUnit unit) {
-        RedisAtomicLong counter = new RedisAtomicLong(key, Objects.requireNonNull(redisTemplate.getConnectionFactory()));
-        counter.expire(timeout, unit);
-        return StringUtils.padPre(String.valueOf(counter.incrementAndGet()), 6, "0");
     }
 
 }

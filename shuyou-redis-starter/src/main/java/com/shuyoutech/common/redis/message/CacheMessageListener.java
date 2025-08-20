@@ -1,8 +1,8 @@
-package com.shuyoutech.common.cache.message;
+package com.shuyoutech.common.redis.message;
 
-import com.shuyoutech.common.cache.enums.CacheMsgTypeEnum;
-import com.shuyoutech.common.cache.manager.RedisCaffeineCache;
 import com.shuyoutech.common.core.util.MessageSourceUtils;
+import com.shuyoutech.common.redis.enums.CacheMsgTypeEnum;
+import com.shuyoutech.common.redis.manager.RedisCaffeineCache;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.redis.connection.Message;

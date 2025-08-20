@@ -1,8 +1,8 @@
-package com.shuyoutech.common.cache.util;
+package com.shuyoutech.common.redis.util;
 
-import com.shuyoutech.common.cache.manager.RedisCaffeineCache;
 import com.shuyoutech.common.core.util.MapUtils;
 import com.shuyoutech.common.core.util.SpringUtils;
+import com.shuyoutech.common.redis.manager.RedisCaffeineCache;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 

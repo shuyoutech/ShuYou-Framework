@@ -1,1 +1,2 @@
 com.shuyoutech.common.redis.config.RedisConfig
+com.shuyoutech.common.redis.config.CacheConfig

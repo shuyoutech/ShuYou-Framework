@@ -107,7 +107,6 @@
         <module>shuyou-core</module>
         <module>shuyou-redis-starter</module>
         <module>shuyou-mongodb-starter</module>
-        <module>shuyou-cache-starter</module>
         <module>shuyou-disruptor-starter</module>
         <module>shuyou-mybatis-starter</module>
         <module>shuyou-satoken-starter</module>
