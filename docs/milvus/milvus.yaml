@@ -897,8 +897,6 @@ internaltls:
   sni: localhost # The server name indication (SNI) for internal TLS, should be the same as the name provided by the certificates ref: https://en.wikipedia.org/wiki/Server_Name_Indication
 
 common:
-  security:
-    authorizationEnabled: true
   defaultPartitionName: _default # Name of the default partition when a collection is created
   defaultIndexName: _default_idx # Name of the index when it is created with name unspecified
   entityExpiration: -1 # Entity expiration in seconds, CAUTION -1 means never expire
@@ -937,7 +935,7 @@ common:
   # In this case, the maximum concurrency of disk write operations is determined by the caller's thread pool size.
   diskWriteNumThreads: 0
   security:
-    authorizationEnabled: false
+    authorizationEnabled: true
     # The superusers will ignore some system check processes,
     # like the old password verification when updating the credential
     superUsers: 
