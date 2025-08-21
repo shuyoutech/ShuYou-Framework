@@ -95,7 +95,6 @@
         <coze.version>0.3.2</coze.version>
         <tinyflow.version>1.0.8</tinyflow.version>
         <okhttp.version>5.1.0</okhttp.version>
-        <protobuf.version>3.19.6</protobuf.version>
         <wechatpay.version>0.2.17</wechatpay.version>
         <openai-java.version>3.0.0</openai-java.version>
         <java-jwt.version>4.5.0</java-jwt.version>
@@ -111,6 +110,7 @@
         <module>shuyou-mybatis-starter</module>
         <module>shuyou-satoken-starter</module>
         <module>shuyou-elasticsearch-starter</module>
+        <module>shuyou-milvus-starter</module>
     </modules>
 
     <!--  统一管理公共jar包引用 start -->
@@ -370,13 +370,6 @@
                 <version>${ip2region.version}</version>
             </dependency>
 
-            <!-- minio对象存储OSS -->
-            <dependency>
-                <groupId>io.minio</groupId>
-                <artifactId>minio</artifactId>
-                <version>${minio.version}</version>
-            </dependency>
-
             <!-- RocketMQ 消息队列 -->
             <dependency>
                 <groupId>org.apache.rocketmq</groupId>
@@ -448,24 +441,6 @@
                 <groupId>com.coze</groupId>
                 <artifactId>coze-api</artifactId>
                 <version>${coze.version}</version>
-            </dependency>
-
-            <!-- Tinyflow 设计出来的工作流 -->
-            <dependency>
-                <groupId>dev.tinyflow</groupId>
-                <artifactId>tinyflow-java-core</artifactId>
-                <version>${tinyflow.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.google.protobuf</groupId>
-                <artifactId>protobuf-java</artifactId>
-                <version>${protobuf.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.google.protobuf</groupId>
-                <artifactId>protobuf-java-util</artifactId>
-                <version>${protobuf.version}</version>
             </dependency>
 
             <dependency>

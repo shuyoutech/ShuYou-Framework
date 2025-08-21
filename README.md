@@ -13,6 +13,12 @@ ShuYou-Framework微服务脚手架，采用SpringBoot3.5、SpringCloud2025、Spr
 |                     |            |    |
 
 
+## 第三方组件
+Milvus :
+https://milvus.io/api-reference/java/v2.5.x/About.md
+https://github.com/milvus-io/milvus
+https://gitee.com/dromara/MilvusPlus
+
 
 
 ## 快速链接

@@ -65,6 +65,11 @@
             </dependency>
             <dependency>
                 <groupId>com.shuyoutech</groupId>
+                <artifactId>shuyou-milvus-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.shuyoutech</groupId>
                 <artifactId>shuyou-mongodb-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
