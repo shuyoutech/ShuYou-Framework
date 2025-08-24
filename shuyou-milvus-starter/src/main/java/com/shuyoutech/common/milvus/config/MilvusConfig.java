@@ -1,6 +1,6 @@
 package com.shuyoutech.common.milvus.config;
 
-import com.shuyoutech.common.milvus.properties.MilvusProperties;
+import com.shuyoutech.common.milvus.config.properties.MilvusProperties;
 import io.milvus.v2.client.ConnectConfig;
 import io.milvus.v2.client.MilvusClientV2;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +23,7 @@ public class MilvusConfig {
                 .uri(milvusProperties.getUri()) //
                 .username(milvusProperties.getUsername()) //
                 .password(milvusProperties.getPassword()) //
+                .dbName(milvusProperties.getDatabase()) //
                 .build();
         return new MilvusClientV2(connectConfig);
     }
