@@ -224,4 +224,16 @@ public class MilvusUtils {
         return searchR.getSearchResults();
     }
 
+    public static List<List<SearchResp.SearchResult>> hybridSearch(String collectionName, List<AnnSearchReq> searchRequests, CreateCollectionReq.Function ranker, int limit) {
+        HybridSearchReq req = HybridSearchReq.builder() //
+                .collectionName(collectionName) //
+                .searchRequests(searchRequests) //
+                .ranker(ranker) //
+                .topK(limit) //
+                .outFields(Collections.singletonList("*")) //
+                .build();
+        SearchResp searchResp = milvusClientV2.hybridSearch(req);
+        return searchResp.getSearchResults();
+    }
+
 }
