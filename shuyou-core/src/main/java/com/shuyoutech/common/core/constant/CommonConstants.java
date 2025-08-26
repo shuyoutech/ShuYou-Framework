@@ -153,4 +153,14 @@ public interface CommonConstants {
      */
     String NO_CACHE = "no-cache";
 
+    /**
+     * api 服务名称
+     */
+    String API = "api";
+
+    /**
+     * 参数
+     */
+    String PARAMS = "params";
+
 }
