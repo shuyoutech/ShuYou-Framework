@@ -94,11 +94,12 @@
         <captcha.version>1.5.2</captcha.version>
         <coze.version>0.3.2</coze.version>
         <tinyflow.version>1.0.8</tinyflow.version>
-        <okhttp.version>5.1.0</okhttp.version>
+        <okhttp.version>4.12.0</okhttp.version>
         <wechatpay.version>0.2.17</wechatpay.version>
         <openai-java.version>3.0.0</openai-java.version>
         <java-jwt.version>4.5.0</java-jwt.version>
         <hikaricp.version>6.3.1</hikaricp.version>
+        <minio.version>8.5.17</minio.version>
     </properties>
 
     <modules>
@@ -470,6 +471,12 @@
                 <groupId>com.auth0</groupId>
                 <artifactId>java-jwt</artifactId>
                 <version>${java-jwt.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
