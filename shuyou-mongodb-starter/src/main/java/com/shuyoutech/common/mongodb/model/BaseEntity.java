@@ -19,10 +19,4 @@ public class BaseEntity<T extends BaseEntity<T>> implements Serializable {
     @Schema(description = "主键")
     private String id;
 
-    @SuppressWarnings("unchecked")
-    public T setId(String id) {
-        this.id = id;
-        return (T) this;
-    }
-
 }

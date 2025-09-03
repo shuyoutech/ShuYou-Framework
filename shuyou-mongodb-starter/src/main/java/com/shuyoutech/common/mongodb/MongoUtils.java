@@ -15,7 +15,6 @@ import com.shuyoutech.common.core.constant.NumberConstants;
 import com.shuyoutech.common.core.exception.BusinessException;
 import com.shuyoutech.common.core.service.AbstractRunnable;
 import com.shuyoutech.common.core.util.*;
-import com.shuyoutech.common.mongodb.model.BaseEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -40,6 +39,8 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import static com.shuyoutech.common.core.constant.EntityConstants.SQL_ID;
+
 /**
  * @author YangChao
  * @date 2025-04-06 20:26
@@ -59,7 +60,7 @@ public class MongoUtils {
      * @param entity 实体类
      * @return 执行记录数
      */
-    public static <E extends BaseEntity<E>> E insert(E entity) {
+    public static <E> E insert(E entity) {
         return mongoTemplate.insert(entity);
     }
 
@@ -69,7 +70,7 @@ public class MongoUtils {
      * @param list 实体集合
      * @return 执行记录数
      */
-    public static <E extends BaseEntity<E>> Collection<E> insertBatch(Collection<E> list) {
+    public static <E> Collection<E> insertBatch(Collection<E> list) {
         return mongoTemplate.insertAll(list);
     }
 
@@ -79,7 +80,7 @@ public class MongoUtils {
      * @param entity 实体类
      * @return 执行记录数
      */
-    public static <E extends BaseEntity<E>> E save(E entity) {
+    public static <E> E save(E entity) {
         return mongoTemplate.save(entity);
     }
 
@@ -89,12 +90,15 @@ public class MongoUtils {
      * @param list 实体集合
      * @return 执行记录数
      */
-    public static <E extends BaseEntity<E>> Collection<E> saveBatch(Collection<E> list) {
+    public static <E> Collection<E> saveBatch(Collection<E> list) {
         try {
             return mongoTemplate.insertAll(list);
         } catch (DuplicateKeyException duplicateKeyException) {
-            deleteByIds(StreamUtils.toSet(list, E::getId), CollectionUtils.getFirst(list).getClass());
-            return mongoTemplate.insertAll(list);
+            List<E> result = CollectionUtils.newArrayList();
+            for (E entity : list) {
+                result.add(mongoTemplate.save(entity));
+            }
+            return result;
         }
     }
 
@@ -104,12 +108,13 @@ public class MongoUtils {
      * @param entity 实体类
      * @return 执行记录数
      */
-    public static <E extends BaseEntity<E>> boolean update(E entity) {
+    public static <E> boolean update(E entity) {
         Update update = entityToUpdate(entity, false);
         if (null == update) {
             return false;
         }
-        return patch(entity.getId(), update, entity.getClass());
+        Object id = ReflectUtils.getFieldValue(entity, SQL_ID);
+        return patch(id, update, entity.getClass());
     }
 
     /**
@@ -118,12 +123,13 @@ public class MongoUtils {
      * @param entity 实体类
      * @return 执行记录数
      */
-    public static <E extends BaseEntity<E>> boolean patch(E entity) {
+    public static <E> boolean patch(E entity) {
         Update update = entityToUpdate(entity, true);
         if (null == update) {
             return false;
         }
-        return patch(entity.getId(), update, entity.getClass());
+        Object id = ReflectUtils.getFieldValue(entity, SQL_ID);
+        return patch(id, update, entity.getClass());
     }
 
     /**
@@ -133,7 +139,7 @@ public class MongoUtils {
      * @param update 实体类
      * @param clazz  类
      */
-    public static <E extends BaseEntity<E>> boolean patch(Object id, Update update, Class<E> clazz) {
+    public static <E> boolean patch(Object id, Update update, Class<E> clazz) {
         Query query = Query.query(Criteria.where(EntityConstants.NOSQL_ID).is(id));
         UpdateResult result = mongoTemplate.upsert(query, update, clazz);
         return result.getModifiedCount() > 0;
@@ -144,13 +150,15 @@ public class MongoUtils {
      *
      * @param list 实体集合
      */
-    public static <E extends BaseEntity<E>> void updateBatch(Collection<E> list) {
+    public static <E> void updateBatch(Collection<E> list) {
         Class<?> targetClass = CollectionUtils.getFirst(list).getClass();
         BulkOperations ops = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, targetClass);
         Update update;
         Query query;
+        Object id;
         for (E e : list) {
-            query = Query.query(Criteria.where(EntityConstants.NOSQL_ID).is(e.getId()));
+            id = ReflectUtils.getFieldValue(e, SQL_ID);
+            query = Query.query(Criteria.where(EntityConstants.NOSQL_ID).is(id));
             update = entityToUpdate(e, false);
             if (null == update) {
                 continue;
@@ -165,13 +173,15 @@ public class MongoUtils {
      *
      * @param list 实体集合
      */
-    public static <E extends BaseEntity<E>> void patchBatch(Collection<E> list) {
+    public static <E> void patchBatch(Collection<E> list) {
         Update update;
         Query query;
         Class<?> targetClass = CollectionUtils.getFirst(list).getClass();
         BulkOperations ops = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, targetClass);
+        Object id;
         for (E e : list) {
-            query = Query.query(Criteria.where(EntityConstants.NOSQL_ID).is(e.getId()));
+            id = ReflectUtils.getFieldValue(e, SQL_ID);
+            query = Query.query(Criteria.where(EntityConstants.NOSQL_ID).is(id));
             update = entityToUpdate(e, true);
             if (null == update) {
                 continue;
@@ -187,11 +197,11 @@ public class MongoUtils {
      * @param updateMap 对象Map
      * @param clazz     实体类
      */
-    public static <E extends BaseEntity<E>> void patchBatch(Map<String, Update> updateMap, Class<E> clazz) {
+    public static <E> void patchBatch(Map<? extends Serializable, Update> updateMap, Class<E> clazz) {
         try {
             BulkOperations ops = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, clazz);
             List<Pair<Query, UpdateDefinition>> updates = CollectionUtils.newArrayList();
-            for (String id : updateMap.keySet()) {
+            for (Serializable id : updateMap.keySet()) {
                 updates.add(Pair.of(Query.query(Criteria.where(EntityConstants.NOSQL_ID).is(id)), updateMap.get(id)));
             }
             ops.updateMulti(updates);
@@ -201,11 +211,11 @@ public class MongoUtils {
         }
     }
 
-    public static <E extends BaseEntity<E>> Update entityToUpdate(E entity, boolean beenPatch) {
+    public static <E> Update entityToUpdate(E entity, boolean beenPatch) {
         Dict dict = Dict.parse(entity);
         Update update = null;
         for (String key : dict.keySet()) {
-            if (EntityConstants.SQL_ID.equals(key)) {
+            if (SQL_ID.equals(key)) {
                 continue;
             }
             if (beenPatch && ObjectUtils.isEmpty(dict.get(key))) {
@@ -226,7 +236,7 @@ public class MongoUtils {
      * @param clazz 实体类
      * @return 执行记录数
      */
-    public static <E extends BaseEntity<E>> long deleteById(Serializable id, Class<E> clazz) {
+    public static <E> long deleteById(Object id, Class<E> clazz) {
         Query query = new Query(Criteria.where(EntityConstants.NOSQL_ID).is(id));
         DeleteResult deleteResult = mongoTemplate.remove(query, clazz);
         return deleteResult.getDeletedCount();
@@ -239,7 +249,7 @@ public class MongoUtils {
      * @param clazz 实体类
      * @return 执行记录数
      */
-    public static <E> long deleteByIds(Collection<?> ids, Class<E> clazz) {
+    public static <E> long deleteByIds(Collection<? extends Serializable> ids, Class<E> clazz) {
         Query query = new Query(Criteria.where(EntityConstants.NOSQL_ID).in(ids));
         DeleteResult deleteResult = mongoTemplate.remove(query, clazz);
         return deleteResult.getDeletedCount();
@@ -264,7 +274,7 @@ public class MongoUtils {
      * @param clazz 实体类
      * @return 对象
      */
-    public static <E extends BaseEntity<E>> E getById(Serializable id, Class<E> clazz) {
+    public static <E> E getById(Object id, Class<E> clazz) {
         return mongoTemplate.findById(id, clazz);
     }
 
@@ -275,7 +285,7 @@ public class MongoUtils {
      * @param clazz  实体类
      * @return 集合对象
      */
-    public static <E extends BaseEntity<E>> List<E> getByIds(Collection<? extends Serializable> idList, Class<E> clazz) {
+    public static <E> List<E> getByIds(Collection<? extends Serializable> idList, Class<E> clazz) {
         if (CollectionUtils.isEmpty(idList)) {
             return null;
         }
@@ -293,7 +303,7 @@ public class MongoUtils {
      * @param clazz 实体类
      * @return 类名
      */
-    private static <E extends BaseEntity<E>> String getCollection(Class<E> clazz) {
+    private static <E> String getCollection(Class<E> clazz) {
         org.springframework.data.mongodb.core.mapping.Document annotation = AnnotationUtil.getAnnotation(clazz, org.springframework.data.mongodb.core.mapping.Document.class);
         String collection = annotation.collection();
         if (StringUtils.isEmpty(collection)) {
@@ -310,7 +320,7 @@ public class MongoUtils {
      * @param clazz 实体类
      * @return 查询笔数
      */
-    public static <E extends BaseEntity<E>> long count(Query query, Class<E> clazz) {
+    public static <E> long count(Query query, Class<E> clazz) {
         return mongoTemplate.count(query, clazz);
     }
 
@@ -321,7 +331,7 @@ public class MongoUtils {
      * @param clazz 实体类
      * @return 对象
      */
-    public static <E extends BaseEntity<E>> E selectOne(Query query, Class<E> clazz) {
+    public static <E> E selectOne(Query query, Class<E> clazz) {
         return mongoTemplate.findOne(query, clazz);
     }
 
@@ -332,7 +342,7 @@ public class MongoUtils {
      * @param clazz 实体类
      * @return 对象分页集合
      */
-    public static <E extends BaseEntity<E>> List<E> selectList(Query query, Class<E> clazz) {
+    public static <E> List<E> selectList(Query query, Class<E> clazz) {
         return mongoTemplate.find(query, clazz);
     }
 
@@ -342,7 +352,7 @@ public class MongoUtils {
      * @param clazz 实体类
      * @return 对象分页集合
      */
-    public static <E extends BaseEntity<E>> List<E> selectList(Class<E> clazz) {
+    public static <E> List<E> selectList(Class<E> clazz) {
         Query query = new Query();
         return mongoTemplate.find(query, clazz);
     }
@@ -354,7 +364,7 @@ public class MongoUtils {
      * @param clazz 实体类
      * @return 对象集合
      */
-    public static <E extends BaseEntity<E>> List<E> selectScroll(Query query, Class<E> clazz) {
+    public static <E> List<E> selectScroll(Query query, Class<E> clazz) {
         List<E> result = CollectionUtils.newArrayList();
         String collection = getCollection(clazz);
         Bson bson = new BasicDBObject(query.getQueryObject());
@@ -371,7 +381,7 @@ public class MongoUtils {
             d = iterator.next();
             e = MapstructUtils.convert(d, clazz);
             if (null != e) {
-                ReflectUtil.setFieldValue(e, EntityConstants.SQL_ID, d.get(EntityConstants.NOSQL_ID).toString());
+                ReflectUtil.setFieldValue(e, SQL_ID, d.get(EntityConstants.NOSQL_ID).toString());
                 result.add(e);
             }
         }
@@ -385,7 +395,7 @@ public class MongoUtils {
      * @param clazz         实体类
      * @param runnableClass 处理类
      */
-    public static <E extends BaseEntity<E>, R extends AbstractRunnable<E>> void selectScroll(Query query, Class<E> clazz, Class<R> runnableClass) {
+    public static <E, R extends AbstractRunnable<E>> void selectScroll(Query query, Class<E> clazz, Class<R> runnableClass) {
         long count = count(query, clazz);
         if (count == 0) {
             return;
@@ -408,7 +418,7 @@ public class MongoUtils {
             if (null == e) {
                 continue;
             }
-            ReflectUtil.setFieldValue(e, EntityConstants.SQL_ID, d.get(EntityConstants.NOSQL_ID).toString());
+            ReflectUtil.setFieldValue(e, SQL_ID, d.get(EntityConstants.NOSQL_ID));
             list.add(e);
             ++i;
             if (0 == i % limit) {
@@ -446,7 +456,7 @@ public class MongoUtils {
      * @param clazz       实体类
      * @return 实体集合
      */
-    public static <E extends BaseEntity<E>> List<Document> aggregate(Aggregation aggregation, Class<E> clazz) {
+    public static <E> List<Document> aggregate(Aggregation aggregation, Class<E> clazz) {
         AggregationResults<Document> results = mongoTemplate.aggregate(aggregation, clazz, Document.class);
         return results.getMappedResults();
     }
@@ -459,7 +469,7 @@ public class MongoUtils {
      * @param clazz          实体类
      * @return 实体集合
      */
-    public static <E extends BaseEntity<E>> List<Document> aggregate(Criteria criteria, GroupOperation groupOperation, Class<E> clazz) {
+    public static <E> List<Document> aggregate(Criteria criteria, GroupOperation groupOperation, Class<E> clazz) {
         Aggregation aggregation = Aggregation.newAggregation(Aggregation.match(criteria), groupOperation);
         AggregationResults<Document> results = mongoTemplate.aggregate(aggregation, clazz, Document.class);
         return results.getMappedResults();
