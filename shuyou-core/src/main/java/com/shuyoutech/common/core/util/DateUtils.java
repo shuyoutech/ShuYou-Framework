@@ -5,6 +5,7 @@ import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import com.shuyoutech.common.core.constant.NumberConstants;
 
+import java.math.RoundingMode;
 import java.time.*;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +41,14 @@ public class DateUtils extends DateUtil {
     /**
      * 计算两个时间差
      */
-    public static String getDatePoor(Date endDate, Date nowDate) {
+    public static String formatTimeSince(Date date) {
+        return formatTimeSince(date, new Date());
+    }
+
+    /**
+     * 计算两个时间差
+     */
+    public static String formatTimeSince(Date endDate, Date nowDate) {
         long nd = 1000 * 24 * 60 * 60;
         long nh = 1000 * 60 * 60;
         long nm = 1000 * 60;
@@ -56,6 +64,34 @@ public class DateUtils extends DateUtil {
         // 计算差多少秒//输出结果
         // long sec = diff % nd % nh % nm / ns;
         return day + "天" + hour + "小时" + min + "分钟";
+    }
+
+    /**
+     * 根据当前时间计算并返回相对时间描述（如"刚刚"、"X分钟前"等
+     */
+    public static String formatRelativeTime(Date date) {
+        return formatRelativeTime(date, new Date());
+    }
+
+    /**
+     * 根据当前时间计算并返回相对时间描述（如"刚刚"、"X分钟前"等
+     */
+    public static String formatRelativeTime(Date date, Date nowDate) {
+        // 获得两个时间的毫秒时间差异
+        long diff = nowDate.getTime() - date.getTime();
+        if (diff < 60000) {
+            return NumberUtils.div(String.valueOf(diff), "1000", 0, RoundingMode.HALF_DOWN).intValue() + "秒前";
+        }
+        if (diff < 3600000) {
+            return NumberUtils.div(String.valueOf(diff), "60000", 0, RoundingMode.HALF_DOWN).intValue() + "分钟前";
+        }
+        if (diff < 86400000) {
+            return NumberUtils.div(String.valueOf(diff), "3600000", 0, RoundingMode.HALF_DOWN).intValue() + "小时前";
+        }
+        if (diff < 2592000000L) {
+            return NumberUtils.div(String.valueOf(diff), "86400000", 0, RoundingMode.HALF_DOWN).intValue() + "天前";
+        }
+        return DateUtils.formatDate(date);
     }
 
     /**

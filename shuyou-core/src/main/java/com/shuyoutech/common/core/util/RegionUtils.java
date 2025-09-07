@@ -31,12 +31,12 @@ public class RegionUtils {
     }
 
     /**
-     * 根据IP地址离线获取城市
+     * 根据IP地址离线获取地理位置
      *
      * @param ip 地址
      * @return 城市
      */
-    public static String getCity(String ip) {
+    public static String getLocation(String ip) {
         try {
             if (StringUtils.isBlank(ip)) {
                 return "";
@@ -51,7 +51,6 @@ public class RegionUtils {
             }
             // region = 国家|区域|省份|城市|ISP --> 中国|0|江苏省|苏州市|电信
             String region = IP_SEARCHER.search(ip);
-            log.info("getCity ================ ip:{},region:{}", ip, region);
             if (StringUtils.isBlank(region)) {
                 return "";
             }
@@ -66,6 +65,32 @@ public class RegionUtils {
                 }
             } else {
                 return region.replace("0|", "").replace("|0", "");
+            }
+        } catch (Exception e) {
+            log.error("getLocation =============== ip:{},exception:{}", ip, e.getMessage());
+        }
+        return "";
+    }
+
+    /**
+     * 根据IP地址离线获取城市
+     *
+     * @param ip 地址
+     * @return 城市
+     */
+    public static String getCity(String ip) {
+        try {
+            String location = getLocation(ip);
+            if (StringUtils.isBlank(location)) {
+                return "";
+            }
+            List<String> arrList = StringUtils.split(location, StringConstants.VERTICAL);
+            if (1 == arrList.size()) {
+                return arrList.getFirst();
+            } else if (2 == arrList.size()) {
+                return arrList.get(1).replaceAll("省", "");
+            } else if (arrList.size() >= 3) {
+                return arrList.get(2).replaceAll("市", "");
             }
         } catch (Exception e) {
             log.error("getCity =============== ip:{},exception:{}", ip, e.getMessage());
