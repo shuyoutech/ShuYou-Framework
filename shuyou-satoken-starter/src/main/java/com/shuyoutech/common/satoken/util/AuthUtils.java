@@ -30,6 +30,13 @@ public class AuthUtils {
     }
 
     /**
+     * 判断当前用户是否登录
+     */
+    public static boolean isLogin() {
+        return StpUtil.isLogin();
+    }
+
+    /**
      * 获取当前登录用户ID
      */
     public static String getLoginUserId() {
