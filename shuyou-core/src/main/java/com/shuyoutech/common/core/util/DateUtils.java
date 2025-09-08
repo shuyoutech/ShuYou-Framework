@@ -91,7 +91,7 @@ public class DateUtils extends DateUtil {
         if (diff < 2592000000L) {
             return NumberUtils.div(String.valueOf(diff), "86400000", 0, RoundingMode.HALF_DOWN).intValue() + "天前";
         }
-        return DateUtils.formatDate(date);
+        return DateUtils.formatDateTime(date);
     }
 
     /**
