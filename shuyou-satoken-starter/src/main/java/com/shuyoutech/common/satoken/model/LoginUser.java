@@ -18,9 +18,6 @@ public class LoginUser implements Serializable {
     @Schema(description = "用户ID")
     private String id;
 
-    @Schema(description = "租户ID")
-    private String tenantId;
-
     @Schema(description = "用户类型")
     private String userType;
 
@@ -40,13 +37,13 @@ public class LoginUser implements Serializable {
     private String orgName;
 
     @Schema(description = "姓名")
-    private String realName;
+    private String name;
 
     @Schema(description = "用户昵称")
     private String nickname;
 
     @Schema(description = "手机号码")
-    private String phone;
+    private String mobile;
 
     @Schema(description = "电子邮箱")
     private String email;
@@ -75,13 +72,16 @@ public class LoginUser implements Serializable {
     @Schema(description = "最后登录IP")
     private String loginIp;
 
+    @Schema(description = "最后登录地点")
+    private String loginLocation;
+
     @Schema(description = "最后登录时间")
     private Date loginDate;
 
     @Schema(description = "菜单权限")
-    private Set<String> menuPermission;
+    private Set<String> menuPermissions;
 
     @Schema(description = "角色权限")
-    private Set<String> rolePermission;
+    private Set<String> rolePermissions;
 
 }

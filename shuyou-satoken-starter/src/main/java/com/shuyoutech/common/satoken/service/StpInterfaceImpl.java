@@ -19,7 +19,7 @@ public class StpInterfaceImpl implements StpInterface {
     @Override
     public List<String> getPermissionList(Object loginId, String loginType) {
         LoginUser loginUser = AuthUtils.getLoginUser();
-        return new ArrayList<>(loginUser.getMenuPermission());
+        return new ArrayList<>(loginUser.getMenuPermissions());
     }
 
     /**
@@ -28,7 +28,7 @@ public class StpInterfaceImpl implements StpInterface {
     @Override
     public List<String> getRoleList(Object loginId, String loginType) {
         LoginUser loginUser = AuthUtils.getLoginUser();
-        return new ArrayList<>(loginUser.getRolePermission());
+        return new ArrayList<>(loginUser.getRolePermissions());
     }
 
 }
