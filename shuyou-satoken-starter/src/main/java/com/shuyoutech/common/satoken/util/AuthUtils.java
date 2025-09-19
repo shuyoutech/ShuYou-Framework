@@ -33,7 +33,11 @@ public class AuthUtils {
      * 判断当前用户是否登录
      */
     public static boolean isLogin() {
-        return StpUtil.isLogin();
+        try {
+            return StpUtil.isLogin();
+        } catch (Exception ignore) {
+        }
+        return false;
     }
 
     /**
