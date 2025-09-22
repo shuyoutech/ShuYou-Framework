@@ -3,11 +3,35 @@ package com.shuyoutech.common.core.util;
 import cn.hutool.core.util.StrUtil;
 import com.shuyoutech.common.core.constant.StringConstants;
 
+import static cn.hutool.core.util.ReUtil.RE_CHINESES;
+
 /**
  * @author YangChao
  * @date 2025-07-06 12:11
  **/
 public class StringUtils extends StrUtil {
+
+    /**
+     * 计算文本长度,汉字：2字符 其余都是1
+     *
+     * @param text 文本
+     * @return 长度
+     */
+    public static int calTextLength(String text) {
+        if (StringUtils.isEmpty(text)) {
+            return 0;
+        }
+        int length = 0;
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+            if (RegexUtils.isMatch(RE_CHINESES, String.valueOf(c))) {
+                length += 2;
+            } else {
+                length += 1;
+            }
+        }
+        return length;
+    }
 
     /**
      * 拼接字符串
