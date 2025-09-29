@@ -24,7 +24,22 @@ https://gitee.com/dromara/MilvusPlus
 ## 快速链接
 github地址：https://github.com/shuyoutech/ShuYou-Framework
 
-官方网址：https://www.shuyoutech.com/
+
+## 产品功能
+数游科技打造了一系列高效便捷的数字化工具系统，无缝衔接您的生活、工作与学习场景。无论是日常事务处理、专业工作任务还是学习管理，我们的产品都能帮助您节省时间、减少繁琐操作，让效率提升触手可及。
+
+| 数游科技产品      | 地址                           | 备注 |
+|-------------|------------------------------|----|
+| 官方网址        | https://www.shuyoutech.com   |    |
+| Admin管理权限系统 | https://admin.shuyoutech.com |    |
+| AIGC应用系统    | https://ai.shuyoutech.com    |    |
+| BBS论坛系统     | https://bbs.shuyoutech.com   |    |
+| NAV导航系统     | https://nav.shuyoutech.com   |    |
+| Game游戏系统    | https://game.shuyoutech.com  |    |
+| DKP游戏系统     | https://dkp.shuyoutech.com   |    |
+
+
+
 
 ## 联系方式
 
