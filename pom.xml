@@ -97,6 +97,7 @@
         <okhttp.version>4.12.0</okhttp.version>
         <wechatpay.version>0.2.17</wechatpay.version>
         <openai-java.version>4.3.0</openai-java.version>
+        <google.genai.version>1.22.0</google.genai.version>
         <java-jwt.version>4.5.0</java-jwt.version>
         <hikaricp.version>6.3.1</hikaricp.version>
         <minio.version>8.5.17</minio.version>
@@ -454,6 +455,12 @@
                 <groupId>com.openai</groupId>
                 <artifactId>openai-java</artifactId>
                 <version>${openai-java.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.genai</groupId>
+                <artifactId>google-genai</artifactId>
+                <version>${google.genai.version}</version>
             </dependency>
 
             <dependency>
