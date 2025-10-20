@@ -1,6 +1,7 @@
 package com.shuyoutech.common.core.util;
 
 import cn.hutool.core.util.PageUtil;
+import com.alibaba.fastjson2.JSON;
 import com.shuyoutech.common.core.constant.NumberConstants;
 import com.shuyoutech.common.core.service.BatchHandler;
 
@@ -13,6 +14,24 @@ import java.util.Map;
  * @date 2025-07-06 14:43
  **/
 public class CollectionUtils extends cn.hutool.core.collection.CollectionUtil {
+
+    /**
+     * 解析json字符串为list
+     *
+     * @param text the specified string to be parsed
+     * @param type the specified actual class of {@link T}
+     */
+    public static <T> List<T> parseList(String text, Class<T> type) {
+        List<T> list = CollectionUtils.newArrayList();
+        if (StringUtils.isBlank(text)) {
+            return list;
+        }
+        List<T> parseArray = JSON.parseArray(text, type);
+        if (CollectionUtils.isEmpty(parseArray)) {
+            return list;
+        }
+        return parseArray;
+    }
 
     /**
      * 将list按limit大小等分，最后多余的单独一份
