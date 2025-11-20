@@ -5,6 +5,8 @@ import cn.hutool.extra.template.Template;
 import cn.hutool.extra.template.TemplateConfig;
 import cn.hutool.extra.template.TemplateEngine;
 import cn.hutool.extra.template.TemplateUtil;
+import cn.hutool.extra.template.engine.beetl.BeetlEngine;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 
@@ -12,6 +14,7 @@ import java.util.Map;
  * @author YangChao
  * @date 2025-07-25 09:33
  **/
+@Slf4j
 public class TemplateUtils extends TemplateUtil {
 
     /**
@@ -25,11 +28,24 @@ public class TemplateUtils extends TemplateUtil {
         if (StringUtils.isBlank(content) || MapUtils.isEmpty(params)) {
             return content;
         }
-        Dict dict = Dict.create();
-        dict.putAll(params);
-        TemplateEngine engine = TemplateUtil.createEngine(new TemplateConfig());
-        Template template = engine.getTemplate(content);
-        return template.render(dict);
+        try {
+            Dict dict = Dict.create();
+            dict.putAll(params);
+            TemplateConfig config = new TemplateConfig();
+            config.setResourceMode(TemplateConfig.ResourceMode.STRING);
+            config.setCustomEngine(BeetlEngine.class);
+            TemplateEngine engine = TemplateUtil.createEngine(new TemplateConfig());
+            Template template = engine.getTemplate(content);
+            return template.render(dict);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            String result = content;
+            for (String key : params.keySet()) {
+                String placeholder = "${" + key + "}";
+                result = result.replace(placeholder, StringUtils.toStringOrEmpty(params.get(key)));
+            }
+            return result;
+        }
     }
 
 }
