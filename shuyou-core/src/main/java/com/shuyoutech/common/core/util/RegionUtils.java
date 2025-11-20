@@ -89,7 +89,9 @@ public class RegionUtils {
                 return arrList.getFirst();
             } else if (2 == arrList.size()) {
                 return arrList.get(1).replaceAll("省", "");
-            } else if (arrList.size() >= 3) {
+            } else if (3 == arrList.size()) {
+                return arrList.get(1).replaceAll("省", "");
+            } else if (arrList.size() >= 4) {
                 return arrList.get(2).replaceAll("市", "");
             }
         } catch (Exception e) {
