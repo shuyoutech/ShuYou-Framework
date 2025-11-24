@@ -1,8 +1,7 @@
 package com.shuyoutech.common.core.util;
 
 import cn.hutool.core.io.resource.ResourceUtil;
-import cn.hutool.core.net.NetUtil;
-import cn.hutool.http.HtmlUtil;
+import cn.hutool.core.lang.Validator;
 import com.shuyoutech.common.core.constant.StringConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.lionsoul.ip2region.xdb.LongByteArray;
@@ -49,18 +48,12 @@ public class RegionUtils {
             if (StringUtils.isBlank(ip)) {
                 return "";
             }
-            if (StringUtils.containsIgnoreCase(ip, "0:0:0:0:0:0:0:1")) {
-                ip = "127.0.0.1";
-            } else {
-                ip = HtmlUtil.cleanHtmlTag(ip);
-            }
-            if (NetUtil.isInnerIP(ip)) {
-                return "内网IP";
-            }
             // 中国|广东省|深圳市|家庭宽带
             // region = 国家|区域|省份|城市|ISP --> 中国|0|江苏省|苏州市|电信
-            String region = IP_SEARCHER_V4.search(ip);
-            if (StringUtils.isBlank(region)) {
+            String region = "";
+            if (Validator.isIpv4(ip)) {
+                region = IP_SEARCHER_V4.search(ip);
+            } else if (Validator.isIpv6(ip)) {
                 region = IP_SEARCHER_V6.search(ip);
             }
             return region;
@@ -89,6 +82,9 @@ public class RegionUtils {
                     continue;
                 }
                 list.add(str);
+            }
+            if (list.size() == 4) {
+                list.removeLast();
             }
             return CollectionUtils.join(list, " ");
         } catch (Exception e) {
