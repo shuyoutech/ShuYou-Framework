@@ -77,7 +77,7 @@
         <bcpkix-jdk18on.version>1.81</bcpkix-jdk18on.version>
         <redisson.version>3.50.0</redisson.version>
         <jasypt-spring-boot-starter.version>3.0.5</jasypt-spring-boot-starter.version>
-        <ip2region.version>2.7.0</ip2region.version>
+        <ip2region.version>3.1.1</ip2region.version>
         <webmagic.version>1.0.3</webmagic.version>
         <satoken.version>1.44.0</satoken.version>
         <justauth.version>1.16.7</justauth.version>
