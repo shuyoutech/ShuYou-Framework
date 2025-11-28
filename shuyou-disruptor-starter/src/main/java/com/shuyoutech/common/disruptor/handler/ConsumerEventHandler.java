@@ -24,12 +24,12 @@ public class ConsumerEventHandler implements EventHandler<DisruptorEvent> {
             DisruptorData data = event.getValue();
             DisruptorService service = DISRUPTOR_SERVICE_MAP.get(data.getServiceName());
             if (null == service) {
-                log.error("onEvent ============ serviceName:{} is not match target", data.getServiceName());
+                log.error("onEvent serviceName:{} is not match target", data.getServiceName());
                 return;
             }
             service.consume(data);
         } catch (Exception e) {
-            log.error("onEvent ============ exception : {}", e.getMessage());
+            log.error(e.getMessage(), e);
         }
     }
 }
