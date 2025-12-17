@@ -7,6 +7,7 @@ import com.shuyoutech.common.redis.enums.CacheMsgTypeEnum;
 import com.shuyoutech.common.redis.message.CacheMassage;
 import com.shuyoutech.common.redis.util.CaffeineUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.cache.support.AbstractValueAdaptingCache;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -27,6 +28,10 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
     private final String cacheName;
     private final RedisTemplate<String, Object> redisTemplate;
     private final CacheProperties cacheProperties;
+    /**
+     * 实例级别的锁，用于防止并发加载相同key的缓存
+     */
+    private final ReentrantLock lock = new ReentrantLock();
 
     public RedisCaffeineCache(String cacheName, RedisTemplate<String, Object> redisTemplate, CacheProperties cacheProperties) {
         super(cacheProperties.getAllowNull());
@@ -36,14 +41,14 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
     }
 
     @Override
-    protected Object lookup(Object key) {
+    protected Object lookup(@NonNull Object key) {
         String cacheKey = this.cacheName + ":" + key;
-        // 先从caffeine中查找
+        // 先从 caffeine 中查找
         Object obj = CaffeineUtils.get(cacheKey);
         if (null != obj) {
             return obj;
         }
-        // 再从redis中查找
+        // 再从 redis 中查找
         obj = redisTemplate.opsForValue().get(cacheKey);
         if (null != obj) {
             CaffeineUtils.put(cacheKey, obj);
@@ -62,16 +67,23 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
     }
 
     @Override
-    public <T> T get(Object key, Callable<T> valueLoader) {
-        ReentrantLock lock = new ReentrantLock();
+    @SuppressWarnings("unchecked")
+    public <T> T get(@NonNull Object key, @NonNull Callable<T> valueLoader) {
+        // 双重检查锁定，避免重复加载
+        Object obj = lookup(key);
+        if (null != obj) {
+            return (T) obj;
+        }
+        
+        // 加锁，防止并发加载相同key
+        lock.lock();
         try {
-            // 加锁
-            lock.lock();
-            Object obj = lookup(key);
+            // 再次检查，可能在等待锁的过程中，其他线程已经加载了
+            obj = lookup(key);
             if (null != obj) {
                 return (T) obj;
             }
-            // 没有找到
+            // 没有找到，执行加载
             obj = valueLoader.call();
             // 放入缓存
             put(key, obj);

@@ -1,9 +1,11 @@
 package com.shuyoutech.common.redis.util;
 
+import com.shuyoutech.common.core.constant.NumberConstants;
 import com.shuyoutech.common.core.util.CollectionUtils;
 import com.shuyoutech.common.core.util.ConvertUtils;
 import com.shuyoutech.common.core.util.SpringUtils;
 import com.shuyoutech.common.redis.model.RedisMessage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.*;
 
@@ -12,11 +14,12 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Redis工具类
+ * Redis 工具类
  *
  * @author YangChao
  * @date 2025-08-06 16:47
  **/
+@Slf4j
 public class RedisUtils {
 
     private static final RedisTemplate<String, Object> redisTemplate = SpringUtils.getBean("redisTemplate");
@@ -38,11 +41,44 @@ public class RedisUtils {
      * @return keys Set集合
      */
     public static Set<String> keys(String pattern) {
-        return redisTemplate.keys(pattern);
+        return scanKeys(pattern);
+    }
+
+
+    /**
+     * 使用 SCAN 命令扫描匹配的 key
+     * 非阻塞操作，适合生产环境使用
+     *
+     * @param pattern 匹配模式
+     * @return 匹配的 key 集合
+     */
+    public static Set<String> scanKeys(String pattern) {
+        return scanKeys(pattern, NumberConstants.ONE_THOUSAND);
     }
 
     /**
-     * 删除单个key
+     * 使用 SCAN 命令扫描匹配的 key
+     *
+     * @param pattern 匹配模式
+     * @param count   每次扫描的数量
+     * @return 匹配的 key 集合
+     */
+    public static Set<String> scanKeys(String pattern, int count) {
+        Set<String> keys = new HashSet<>();
+        ScanOptions options = ScanOptions.scanOptions().match(pattern).count(count).build();
+        try (Cursor<String> cursor = redisTemplate.scan(options)) {
+            while (cursor.hasNext()) {
+                keys.add(cursor.next());
+            }
+        } catch (Exception e) {
+            log.error("扫描 Redis keys 失败, pattern: {}, error: {}", pattern, e.getMessage(), e);
+            throw new RuntimeException("扫描 Redis keys 失败", e);
+        }
+        return keys;
+    }
+
+    /**
+     * 删除单个 key
      *
      * @param key 缓存的键
      */
@@ -51,7 +87,7 @@ public class RedisUtils {
     }
 
     /**
-     * 删除多个key
+     * 删除多个 key
      *
      * @param key 键集合
      */
@@ -60,7 +96,7 @@ public class RedisUtils {
     }
 
     /**
-     * 删除多个key
+     * 删除多个 key
      *
      * @param keys 键集合
      */
@@ -148,7 +184,7 @@ public class RedisUtils {
     }
 
     /**
-     * 将value对象写入缓存
+     * 将 value对象写入缓存
      *
      * @param key     缓存的键值
      * @param value   缓存的值
@@ -161,7 +197,7 @@ public class RedisUtils {
     }
 
     /**
-     * 指定key缓存失效时间
+     * 指定 key缓存失效时间
      *
      * @param key     Redis键
      * @param timeout 失效时间
@@ -182,7 +218,7 @@ public class RedisUtils {
     }
 
     /**
-     * 根据key获取过期时间
+     * 根据 key获取过期时间
      *
      * @param key Redis键
      * @return 时间(秒) 返回0代表为永久有效
@@ -237,7 +273,7 @@ public class RedisUtils {
     }
 
     /**
-     * 取得缓存Integer
+     * 取得缓存 Integer
      *
      * @param key 缓存键值
      * @return Integer
@@ -247,7 +283,7 @@ public class RedisUtils {
     }
 
     /**
-     * 取得缓存Long
+     * 取得缓存 Long
      *
      * @param key 缓存键值
      * @return Long
@@ -257,7 +293,7 @@ public class RedisUtils {
     }
 
     /**
-     * 获取double类型值
+     * 获取 double类型值
      *
      * @param key 缓存键值
      * @return Double
@@ -267,7 +303,7 @@ public class RedisUtils {
     }
 
     /**
-     * 获取double类型值
+     * 获取 double类型值
      *
      * @param key 缓存键值
      * @return Boolean
@@ -277,11 +313,11 @@ public class RedisUtils {
     }
 
     /**
-     * 获取object对象缓存
+     * 获取 object对象缓存
      *
      * @param keys   keys
      * @param tClass 返回对象类型
-     * @return 集合values
+     * @return 集合 values
      */
     public static <T> List<T> get(Collection<String> keys, Class<T> tClass) {
         ValueOperations<String, Object> operation = redisTemplate.opsForValue();
@@ -349,7 +385,7 @@ public class RedisUtils {
     }
 
     /**
-     * 根据key获取对象
+     * 根据 key获取对象
      *
      * @param key 缓存的键值
      * @param <T> 对象类型
@@ -360,7 +396,7 @@ public class RedisUtils {
     }
 
     /**
-     * 根据key获取集合大小
+     * 根据 key获取集合大小
      *
      * @param key Redis键
      * @return 集合数量
@@ -382,7 +418,7 @@ public class RedisUtils {
     }
 
     /**
-     * 只有存在key对应的列表才能将这个value值插入到key所对应的列表中
+     * 只有存在 key对应的列表才能将这个value值插入到key所对应的列表中
      *
      * @param key   Redis键
      * @param value Redis值
@@ -393,7 +429,7 @@ public class RedisUtils {
     }
 
     /**
-     * 将集合数据合并到List缓存中
+     * 将集合数据合并到 List缓存中
      *
      * @param key    Redis键
      * @param values Redis值
@@ -408,7 +444,7 @@ public class RedisUtils {
     }
 
     /**
-     * 将单个数据添加到List缓存中
+     * 将单个数据添加到 List缓存中
      *
      * @param key   Redis键
      * @param value Redis值
@@ -420,10 +456,10 @@ public class RedisUtils {
     }
 
     /**
-     * 将集合数据合并到List缓存中
+     * 将集合数据合并到 List缓存中
      *
      * @param key    缓存的键值
-     * @param values 待缓存的List数据
+     * @param values 待缓存的 List数据
      * @param <T>    缓存的对象
      */
     public static <T> void listRightPushAll(String key, Collection<T> values) {
@@ -515,7 +551,7 @@ public class RedisUtils {
     }
 
     /**
-     * 判断Set中是否有该项的值
+     * 判断 Set中是否有该项的值
      *
      * @param key   缓存的键
      * @param value 缓存的值
@@ -537,7 +573,7 @@ public class RedisUtils {
     }
 
     /**
-     * 根据key获取set集合对象
+     * 根据 key获取set集合对象
      *
      * @param key    缓存的键
      * @param tClass 返回对象类型
@@ -563,7 +599,7 @@ public class RedisUtils {
     }
 
     /**
-     * 随机获取集合中count个元素
+     * 随机获取集合中 count个元素
      *
      * @param key    缓存的键
      * @param count  元素个数
@@ -577,7 +613,7 @@ public class RedisUtils {
     }
 
     /**
-     * 随机获取集合中count个元素并且去除重复的
+     * 随机获取集合中 count个元素并且去除重复的
      *
      * @param key    缓存的键
      * @param count  元素个数
@@ -605,7 +641,7 @@ public class RedisUtils {
     }
 
     /**
-     * 获取key集合与多个集合的交集
+     * 获取 key集合与多个集合的交集
      *
      * @param key       缓存的键
      * @param otherKeys 缓存的键
@@ -619,7 +655,7 @@ public class RedisUtils {
     }
 
     /**
-     * key集合与otherKey集合的交集存储到destKey集合中
+     * key 集合与otherKey集合的交集存储到destKey集合中
      *
      * @param key      缓存的键
      * @param otherKey otherKey
@@ -631,7 +667,7 @@ public class RedisUtils {
     }
 
     /**
-     * key集合与多个集合的交集存储到destKey集合中
+     * key 集合与多个集合的交集存储到destKey集合中
      *
      * @param key       缓存的键
      * @param otherKeys otherKeys
@@ -657,7 +693,7 @@ public class RedisUtils {
     }
 
     /**
-     * 获取key集合与多个集合的并集
+     * 获取 key集合与多个集合的并集
      *
      * @param key       缓存的键
      * @param otherKeys otherKeys
@@ -671,7 +707,7 @@ public class RedisUtils {
     }
 
     /**
-     * key集合与otherKey集合的并集存储到destKey中
+     * key 集合与otherKey集合的并集存储到destKey中
      *
      * @param key      缓存的键
      * @param otherKey otherKey
@@ -683,7 +719,7 @@ public class RedisUtils {
     }
 
     /**
-     * key集合与多个集合的并集存储到destKey中
+     * key 集合与多个集合的并集存储到destKey中
      *
      * @param key       缓存的键
      * @param otherKeys otherKeys
@@ -709,7 +745,7 @@ public class RedisUtils {
     }
 
     /**
-     * 获取key集合与多个集合的差集
+     * 获取 key集合与多个集合的差集
      *
      * @param key       缓存的键
      * @param otherKeys otherKeys
@@ -723,7 +759,7 @@ public class RedisUtils {
     }
 
     /**
-     * key集合与otherKey集合的差集存储到destKey中
+     * key 集合与otherKey集合的差集存储到destKey中
      *
      * @param key      缓存的键
      * @param otherKey otherKey
@@ -735,7 +771,7 @@ public class RedisUtils {
     }
 
     /**
-     * key集合与多个集合的差集存储到destKey中
+     * key 集合与多个集合的差集存储到destKey中
      *
      * @param key       缓存的键
      * @param otherKeys otherKeys
@@ -747,7 +783,7 @@ public class RedisUtils {
     }
 
     /**
-     * 将数据放入Set缓存
+     * 将数据放入 Set缓存
      *
      * @param key   缓存的键
      * @param value 缓存的值
@@ -759,7 +795,7 @@ public class RedisUtils {
     }
 
     /**
-     * 将数据放入Set缓存
+     * 将数据放入 Set缓存
      *
      * @param key    缓存的键
      * @param values 缓存集合值
@@ -799,7 +835,7 @@ public class RedisUtils {
     }
 
     /**
-     * 将元素value从一个集合移到另一个集合
+     * 将元素 value从一个集合移到另一个集合
      *
      * @param key     缓存的键
      * @param value   缓存的值
@@ -811,7 +847,7 @@ public class RedisUtils {
     }
 
     /**
-     * 删除Set集合对象
+     * 删除 Set集合对象
      *
      * @param key    缓存的键
      * @param values 删除的对象集合
@@ -848,7 +884,7 @@ public class RedisUtils {
     }
 
     /**
-     * 通过TypedTuple方式新增数据
+     * 通过 TypedTuple方式新增数据
      *
      * @param key    缓存的键
      * @param values TypedTuple值

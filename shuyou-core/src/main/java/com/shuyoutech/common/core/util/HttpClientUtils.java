@@ -76,8 +76,12 @@ public class HttpClientUtils {
     /**
      * 获取 CloseableHttpClient单例
      */
-    public synchronized static CloseableHttpClient getInstance() {
-        return SingletonHolder.httpclient;
+    public static CloseableHttpClient getInstance() {
+        CloseableHttpClient client = SingletonHolder.httpclient;
+        if (client == null) {
+            throw new IllegalStateException("HttpClient未初始化，请检查配置");
+        }
+        return client;
     }
 
     /**
@@ -221,7 +225,7 @@ public class HttpClientUtils {
      * @return 返回对象
      */
     public static <T> T sendPut(String url, Map<String, Object> paramMap, Class<T> responseType) {
-        String result = sendPost(url, paramMap);
+        String result = sendPut(url, paramMap);
         return JSON.parseObject(result, responseType);
     }
 
