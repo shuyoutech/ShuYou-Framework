@@ -49,8 +49,6 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
-        <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
 
         <!-- Spring Boot Cloud Alibaba -->
         <spring-boot.version>4.0.0</spring-boot.version>
@@ -533,11 +531,9 @@
             </resource>
         </resources>
         <plugins>
-            <!--   source源码插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.3.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -547,11 +543,9 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--   javadoc插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.11.2</version>
                 <configuration>
                     <additionalJOption>-Xdoclint:none</additionalJOption>
                 </configuration>
@@ -568,7 +562,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
