@@ -15,53 +15,86 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Redis 工具类
+ * <p>
+ * 提供Redis操作的统一封装，支持Redis的所有主要数据结构操作
+ * <p>
+ * 支持的数据类型：
+ * <ul>
+ *     <li>String：字符串操作</li>
+ *     <li>List：列表操作（队列、栈）</li>
+ *     <li>Set：集合操作（交集、并集、差集）</li>
+ *     <li>ZSet：有序集合操作（排行榜、范围查询）</li>
+ *     <li>Hash：哈希表操作（对象存储）</li>
+ * </ul>
+ * <p>
+ * 特性：
+ * <ul>
+ *     <li>自动类型转换：支持泛型自动转换</li>
+ *     <li>SCAN命令：使用SCAN替代KEYS，避免阻塞</li>
+ *     <li>异常处理：统一的异常处理和日志记录</li>
+ * </ul>
  *
  * @author YangChao
  * @date 2025-08-06 16:47
- **/
+ */
 @Slf4j
 public class RedisUtils {
 
+    /**
+     * Redis 模板实例
+     */
     private static final RedisTemplate<String, Object> redisTemplate = SpringUtils.getBean("redisTemplate");
 
     /**
-     * 判断是否有key所对应的值，有则返回true，没有则返回false
+     * 判断指定 key 是否存在
      *
      * @param key 缓存的键
-     * @return Boolean true 存在 false不存在
+     * @return true-存在，false-不存在
      */
     public static Boolean hasKey(String key) {
         return redisTemplate.hasKey(key);
     }
 
     /**
-     * 查找匹配的key值，返回一个Set集合类型
+     * 查找匹配的key（使用SCAN命令）
+     * <p>
+     * 注意：此方法内部调用scanKeys，使用SCAN命令而非KEYS命令
+     * SCAN命令是非阻塞的，适合生产环境使用
      *
-     * @param pattern 模糊查询key 支持通配符* 形如： *key*
-     * @return keys Set集合
+     * @param pattern 匹配模式，支持通配符*，例如：*key*、user:*
+     * @return 匹配的 key集合
      */
     public static Set<String> keys(String pattern) {
         return scanKeys(pattern);
     }
 
-
     /**
-     * 使用 SCAN 命令扫描匹配的 key
-     * 非阻塞操作，适合生产环境使用
+     * 使用SCAN命令扫描匹配的key（默认每次扫描1000条）
+     * <p>
+     * SCAN命令是非阻塞操作，适合生产环境使用
+     * 相比KEYS命令，SCAN不会阻塞Redis服务器
      *
-     * @param pattern 匹配模式
-     * @return 匹配的 key 集合
+     * @param pattern 匹配模式，支持通配符*
+     * @return 匹配的 key集合
      */
     public static Set<String> scanKeys(String pattern) {
         return scanKeys(pattern, NumberConstants.ONE_THOUSAND);
     }
 
     /**
-     * 使用 SCAN 命令扫描匹配的 key
+     * 使用 SCAN命令扫描匹配的key
+     * <p>
+     * SCAN命令特点：
+     * <ul>
+     *     <li>非阻塞：不会阻塞Redis服务器</li>
+     *     <li>游标迭代：通过游标分批次返回结果</li>
+     *     <li>适合生产：适合在生产环境中使用</li>
+     * </ul>
      *
-     * @param pattern 匹配模式
-     * @param count   每次扫描的数量
+     * @param pattern 匹配模式，支持通配符*
+     * @param count   每次扫描的数量（建议值：100-1000）
      * @return 匹配的 key 集合
+     * @throws RuntimeException 扫描失败时抛出
      */
     public static Set<String> scanKeys(String pattern, int count) {
         Set<String> keys = new HashSet<>();
@@ -80,25 +113,25 @@ public class RedisUtils {
     /**
      * 删除单个 key
      *
-     * @param key 缓存的键
+     * @param key 要删除的键
      */
     public static void delete(String key) {
         redisTemplate.delete(key);
     }
 
     /**
-     * 删除多个 key
+     * 删除多个key（可变参数）
      *
-     * @param key 键集合
+     * @param key 要删除的键（可变参数）
      */
     public static void delete(String... key) {
         redisTemplate.delete(Arrays.asList(key));
     }
 
     /**
-     * 删除多个 key
+     * 删除多个key（集合）
      *
-     * @param keys 键集合
+     * @param keys 要删除的键集合
      */
     public static void delete(Collection<String> keys) {
         redisTemplate.delete(keys);
@@ -146,7 +179,7 @@ public class RedisUtils {
     }
 
     /**
-     * 将缓存的值写入缓存
+     * 设置缓存值（永久有效）
      *
      * @param key   缓存的键
      * @param value 缓存的值
@@ -157,13 +190,15 @@ public class RedisUtils {
     }
 
     /**
-     * 将value对象写入缓存
-     * 如果key存在返回false；如果key不存在，就存入value返回true
+     * 仅当key不存在时设置缓存值（SETNX操作）
+     * <p>
+     * 如果key已存在，返回false；如果key不存在，设置值并返回true
+     * 常用于分布式锁、幂等性控制等场景
      *
      * @param key   Redis键
      * @param value Redis值
      * @param <T>   对象类型
-     * @return boolean 是否成功
+     * @return true-设置成功（key不存在），false-设置失败（key已存在）
      */
     public static <T> Boolean setIfAbsent(String key, T value) {
         return redisTemplate.opsForValue().setIfAbsent(key, value);
@@ -1195,7 +1230,7 @@ public class RedisUtils {
     }
 
     /**
-     * 判断变量中是否有指定的map键
+     * 判断变量中是否有指定的 map键
      *
      * @param key  缓存的键
      * @param item 缓存的map键
@@ -1206,23 +1241,23 @@ public class RedisUtils {
     }
 
     /**
-     * 向key对应的map中添加缓存对象
+     * 向key对应的 map中添加缓存对象
      *
      * @param key   缓存的键
-     * @param item  缓存的map键
-     * @param value 缓存的map值
+     * @param item  缓存的 map键
+     * @param value 缓存的 map值
      */
     public static <HK, HV> void hashPut(String key, HK item, HV value) {
         redisTemplate.opsForHash().put(key, item, value);
     }
 
     /**
-     * 以map集合的形式添加键值对
+     * 以 map集合的形式添加键值对
      *
      * @param key     缓存的键
-     * @param dataMap 缓存的map键值对
-     * @param <HK>    缓存的map键对象类型
-     * @param <HV>    缓存的map值对象类型
+     * @param dataMap 缓存的 map键值对
+     * @param <HK>    缓存的 map键对象类型
+     * @param <HV>    缓存的 map值对象类型
      */
     public static <HK, HV> void hashPutAll(String key, Map<HK, HV> dataMap) {
         redisTemplate.opsForHash().putAll(key, dataMap);
@@ -1232,10 +1267,10 @@ public class RedisUtils {
      * 如果变量值存在，在变量中可以添加不存在的的键值对，如果变量不存在，则新增一个变量，同时将键值对添加到该变量
      *
      * @param key   缓存的键
-     * @param item  缓存的map键
-     * @param value 缓存的map值
-     * @param <HK>  缓存的map键对象类型
-     * @param <HV>  缓存的map值对象类型
+     * @param item  缓存的 map键
+     * @param value 缓存的 map值
+     * @param <HK>  缓存的 map键对象类型
+     * @param <HV>  缓存的 map值对象类型
      */
     public static <HK, HV> Boolean hashPutIfAbsent(String key, HK item, HV value) {
         return redisTemplate.opsForHash().putIfAbsent(key, item, value);
@@ -1245,7 +1280,7 @@ public class RedisUtils {
      * 为哈希表 key 中的指定字段的整数值加上增量 increment
      *
      * @param key       缓存的键
-     * @param item      缓存的map键
+     * @param item      缓存的 map键
      * @param increment 累加值
      * @return Long
      */
@@ -1257,7 +1292,7 @@ public class RedisUtils {
      * 为哈希表 key 中的指定字段的整数值加上增量 increment
      *
      * @param key   缓存的键
-     * @param item  缓存的map键
+     * @param item  缓存的 map键
      * @param delta 累加值
      * @return Double
      */
@@ -1269,8 +1304,8 @@ public class RedisUtils {
      * 获取存储在哈希表中指定字段的值
      *
      * @param key  缓存的键
-     * @param item 缓存的map键
-     * @return 缓存的map键值对象
+     * @param item 缓存的 map键
+     * @return 缓存的 map键值对象
      */
     public static <HK, HV> HV hashGet(String key, HK item, Class<HV> tClass) {
         Object object = redisTemplate.opsForHash().get(key, item);
@@ -1278,10 +1313,10 @@ public class RedisUtils {
     }
 
     /**
-     * 获取hash中的所有键值对
+     * 获取 hash中的所有键值对
      *
      * @param key 缓存的键
-     * @return 缓存的map键值对象
+     * @return 缓存的 map键值对象
      */
     public static <HK, HV> Map<HK, HV> hashEntries(String key) {
         BoundHashOperations<String, HK, HV> boundHashOperations = redisTemplate.boundHashOps(key);
@@ -1292,8 +1327,8 @@ public class RedisUtils {
      * 获取所有给定字段的值
      *
      * @param key   缓存的键
-     * @param items 缓存的map键
-     * @return 缓存的map键值对象集合
+     * @param items 缓存的 map键
+     * @return 缓存的 map键值对象集合
      */
     public static <HK, HV> List<HV> hashMultiGet(String key, Collection<HK> items) {
         BoundHashOperations<String, HK, HV> boundHashOperations = redisTemplate.boundHashOps(key);
@@ -1304,7 +1339,7 @@ public class RedisUtils {
      * 获取所有哈希表中的字段
      *
      * @param key 缓存的键
-     * @return 缓存的map键对象集合
+     * @return 缓存的 map键对象集合
      */
     public static <HK> Set<HK> hashKeys(String key, Class<HK> tClass) {
         Set<Object> objects = redisTemplate.opsForHash().keys(key);
@@ -1312,10 +1347,10 @@ public class RedisUtils {
     }
 
     /**
-     * 获取指定变量中的hashMap值
+     * 获取指定变量中的 hashMap值
      *
      * @param key 缓存的键
-     * @return 缓存的map值对象集合
+     * @return 缓存的 map值对象集合
      */
     public static <HV> List<HV> hashValues(String key, Class<HV> tClass) {
         List<Object> objects = redisTemplate.opsForHash().values(key);
@@ -1347,7 +1382,7 @@ public class RedisUtils {
      * 删除一个或多个哈希表字段
      *
      * @param key      缓存的键
-     * @param hashKeys 缓存的map键对象集合
+     * @param hashKeys 缓存的 map键对象集合
      * @return 个数
      */
     public static Long hashDelete(String key, Collection<Object> hashKeys) {
