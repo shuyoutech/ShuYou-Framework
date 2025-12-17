@@ -14,8 +14,8 @@
     <url>https://github.com/shuyoutech/ShuYou-Framework</url>
 
     <properties>
-        <revision>2025.0.0.0</revision>
-        <java.version>21</java.version>
+        <revision>2026.0.0.0</revision>
+        <java.version>25</java.version>
         <resource.delimiter>@</resource.delimiter>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

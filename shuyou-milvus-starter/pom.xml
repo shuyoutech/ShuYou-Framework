@@ -7,8 +7,8 @@
     <parent>
         <groupId>com.shuyoutech</groupId>
         <artifactId>shuyou-framework</artifactId>
-        <version>2025.0.0.0</version>
-        <relativePath>../pom.xml</relativePath>
+        <version>2026.0.0.0</version>
+        <relativePath/>
     </parent>
 
     <artifactId>shuyou-milvus-starter</artifactId>
@@ -47,12 +47,12 @@
         <dependency>
             <groupId>io.milvus</groupId>
             <artifactId>milvus-sdk-java</artifactId>
-            <version>2.6.2</version>
+            <version>${milvus.version}</version>
         </dependency>
         <dependency>
             <groupId>io.milvus</groupId>
             <artifactId>milvus-sdk-java-bulkwriter</artifactId>
-            <version>2.6.2</version>
+            <version>${milvus.version}</version>
         </dependency>
     </dependencies>
 

@@ -40,10 +40,10 @@
 
     <properties>
         <!-- ShuYou Version -->
-        <revision>2025.0.0.0</revision>
+        <revision>2026.0.0.0</revision>
 
         <!-- Maven project basic config -->
-        <java.version>21</java.version>
+        <java.version>25</java.version>
         <resource.delimiter>@</resource.delimiter>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -53,54 +53,56 @@
         <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
 
         <!-- Spring Boot Cloud Alibaba -->
-        <spring-boot.version>3.5.4</spring-boot.version>
-        <spring-cloud.version>2025.0.0</spring-cloud.version>
-        <spring-cloud-alibaba.version>2023.0.3.3</spring-cloud-alibaba.version>
+        <spring-boot.version>4.0.0</spring-boot.version>
+        <spring-cloud.version>2025.1.0</spring-cloud.version>
+        <spring-cloud-alibaba.version>2025.0.0.0</spring-cloud-alibaba.version>
 
         <!-- open common tool -->
-        <lombok.version>1.18.38</lombok.version>
-        <springdoc.version>2.8.9</springdoc.version>
-        <hutool.version>5.8.38</hutool.version>
-        <mysql.version>9.3.0</mysql.version>
-        <mybatis-plus.version>3.5.12</mybatis-plus.version>
-        <p6spy.version>1.12.0</p6spy.version>
-        <mapstruct-plus.version>1.4.8</mapstruct-plus.version>
+        <lombok.version>1.18.42</lombok.version>
+        <springdoc.version>3.0.0</springdoc.version>
+        <hutool.version>5.8.42</hutool.version>
+        <mysql.version>9.5.0</mysql.version>
+        <mybatis-plus.version>3.5.15</mybatis-plus.version>
+        <p6spy.version>2.0.0</p6spy.version>
+        <mapstruct-plus.version>1.5.0</mapstruct-plus.version>
         <mapstruct-plus.lombok.version>0.2.0</mapstruct-plus.lombok.version>
         <disruptor.version>4.0.0</disruptor.version>
-        <fastjson2.version>2.0.58</fastjson2.version>
+        <fastjson2.version>2.0.60</fastjson2.version>
+        <fastjson2-extension.version>2.0.59</fastjson2-extension.version>
         <jakarta-servlet.version>6.0.0</jakarta-servlet.version>
-        <caffeine.version>3.2.2</caffeine.version>
-        <dubbo.version>3.3.5</dubbo.version>
+        <caffeine.version>3.2.3</caffeine.version>
+        <dubbo.version>3.3.6</dubbo.version>
         <transmittable-thread-local.version>2.14.5</transmittable-thread-local.version>
-        <jjwt.version>0.12.7</jjwt.version>
-        <httpclient5.version>5.5</httpclient5.version>
-        <bcpkix-jdk18on.version>1.81</bcpkix-jdk18on.version>
-        <redisson.version>3.50.0</redisson.version>
+        <jjwt.version>0.13.0</jjwt.version>
+        <httpclient5.version>5.5.1</httpclient5.version>
+        <bcpkix-jdk18on.version>1.83</bcpkix-jdk18on.version>
+        <redisson.version>3.52.0</redisson.version>
         <jasypt-spring-boot-starter.version>3.0.5</jasypt-spring-boot-starter.version>
         <ip2region.version>3.1.1</ip2region.version>
         <webmagic.version>1.0.3</webmagic.version>
         <satoken.version>1.44.0</satoken.version>
         <justauth.version>1.16.7</justauth.version>
-        <beetl.version>3.19.1.RELEASE</beetl.version>
+        <beetl.version>3.20.0.RELEASE</beetl.version>
         <aliyun.oss.version>3.18.2</aliyun.oss.version>
         <aliyun.dysmsapi.version>4.1.0</aliyun.dysmsapi.version>
         <aliyun.ocr.version>3.1.3</aliyun.ocr.version>
-        <rocketmq.version>5.0.7</rocketmq.version>
+        <rocketmq.version>5.1.0</rocketmq.version>
         <alibaba.ai.version>1.0.0-M6.1</alibaba.ai.version>
-        <langchain4j.version>1.6.0</langchain4j.version>
+        <langchain4j.version>1.9.1</langchain4j.version>
         <langchain4j-community.version>1.6.0-beta12</langchain4j-community.version>
         <langgraph4j.version>1.5.14</langgraph4j.version>
-        <spring.ai.version>1.0.1</spring.ai.version>
+        <spring.ai.version>2.0.0-M1</spring.ai.version>
         <captcha.version>1.5.2</captcha.version>
         <coze.version>0.3.2</coze.version>
         <tinyflow.version>1.0.8</tinyflow.version>
         <okhttp.version>4.12.0</okhttp.version>
         <wechatpay.version>0.2.17</wechatpay.version>
-        <openai-java.version>4.3.0</openai-java.version>
-        <google.genai.version>1.22.0</google.genai.version>
+        <openai-java.version>4.12.0</openai-java.version>
+        <google.genai.version>1.31.0</google.genai.version>
         <java-jwt.version>4.5.0</java-jwt.version>
-        <hikaricp.version>6.3.1</hikaricp.version>
+        <hikaricp.version>7.0.2</hikaricp.version>
         <minio.version>8.5.17</minio.version>
+        <milvus.version>2.6.10</milvus.version>
     </properties>
 
     <modules>
@@ -484,6 +486,17 @@
                 <groupId>io.minio</groupId>
                 <artifactId>minio</artifactId>
                 <version>${minio.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.milvus</groupId>
+                <artifactId>milvus-sdk-java</artifactId>
+                <version>${milvus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.milvus</groupId>
+                <artifactId>milvus-sdk-java-bulkwriter</artifactId>
+                <version>${milvus.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

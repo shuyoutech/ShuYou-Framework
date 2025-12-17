@@ -7,8 +7,8 @@
     <parent>
         <groupId>com.shuyoutech</groupId>
         <artifactId>shuyou-framework</artifactId>
-        <version>2025.0.0.0</version>
-        <relativePath>../pom.xml</relativePath>
+        <version>2026.0.0.0</version>
+        <relativePath/>
     </parent>
 
     <artifactId>shuyou-core</artifactId>
@@ -62,7 +62,7 @@
         <dependency>
             <groupId>com.alibaba.fastjson2</groupId>
             <artifactId>fastjson2-extension-spring6</artifactId>
-            <version>${fastjson2.version}</version>
+            <version>${fastjson2-extension.version}</version>
         </dependency>
         <!--  依赖 spring-boot-dependencies -->
         <dependency>

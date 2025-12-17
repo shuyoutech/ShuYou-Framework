@@ -1,0 +1,13 @@
+
+| 名称                   | 地址                                                                 | 备注 |
+|----------------------|--------------------------------------------------------------------|----|
+| jdk                  | https://www.oracle.com/cn/java/technologies/downloads/#jdk25-linux |    |
+| maven                | https://maven.apache.org                                           |    |
+| springboot           | https://spring.io/projects/spring-cloud#support                    |    |
+| springcloud          | https://docs.spring.io/spring-cloud-release/reference/index.html   |    |
+| spring-cloud-alibaba | https://github.com/alibaba/spring-cloud-alibaba                    |    |
+| spring-ai            | https://github.com/spring-projects/spring-ai                       |    |
+|                      |                                                                    |    |
+|                      |                                                                    |    |
+|                      |                                                                    |    |
+
