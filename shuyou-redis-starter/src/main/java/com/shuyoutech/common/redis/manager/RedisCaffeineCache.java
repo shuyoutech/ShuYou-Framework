@@ -76,8 +76,8 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
             // 放入缓存
             put(key, obj);
             return (T) obj;
-        } catch (Exception e) {
-            log.error(e.getMessage());
+        } catch (Exception exception) {
+            log.error(exception.getMessage(), exception);
         } finally {
             lock.unlock();
         }

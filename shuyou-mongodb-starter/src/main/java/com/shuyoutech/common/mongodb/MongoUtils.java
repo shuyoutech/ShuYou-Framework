@@ -207,7 +207,7 @@ public class MongoUtils {
             ops.updateMulti(updates);
             ops.execute();
         } catch (Exception e) {
-            log.error("patchBatch ========================== exception : {}", e.getMessage());
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -425,7 +425,7 @@ public class MongoUtils {
                 sleepTime = 0;
                 while (executor.getQueue().size() > NumberConstants.SIXTY_FOUR) {
                     if (sleepTime >= 300) {
-                        log.error("selectScroll ========================= threads : {}, runnable : {}, 睡了5min，请优化处理程序避免后续查询中断!", executor.getQueue().size(), runnableClass.getSimpleName());
+                        log.error("selectScroll threads : {}, runnable : {}, 睡了5min，请优化处理程序避免后续查询中断!", executor.getQueue().size(), runnableClass.getSimpleName());
                     }
                     ThreadUtil.sleep(1000);
                     sleepTime++;

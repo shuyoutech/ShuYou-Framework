@@ -31,7 +31,7 @@ import java.security.spec.ECPoint;
 import java.security.spec.ECPublicKeySpec;
 
 /**
- * SM国密算法工具类
+ * SM 国密算法工具类
  *
  * @author YangChao
  * @date 2025-07-06 15:01
@@ -65,11 +65,6 @@ public class SmUtils extends SmUtil {
         String publicKeyHexCompress = HexUtil.encodeHexStr(publicKeyCompress);
         String privateKeyPem = sm2.getPrivateKeyBase64();
         String publicKeyPem = sm2.getPublicKeyBase64();
-        log.info("sm2Create ======================= 私钥: {}", privateKeyHex);
-        log.info("sm2Create ======================= 公钥压缩前: {}", publicKeyHex);
-        log.info("sm2Create ======================= 公钥压缩后: {}", publicKeyHexCompress);
-        log.info("sm2Create ======================= 私钥base64: {}", privateKeyPem);
-        log.info("sm2Create ======================= 公钥base64: {}", publicKeyPem);
         JSONObject object = new JSONObject();
         object.put("privateKeyHex", privateKeyHex);
         object.put("publicKeyHex", publicKeyHex);
@@ -96,12 +91,9 @@ public class SmUtils extends SmUtil {
 
             ECPublicKeySpec keySpec = new ECPublicKeySpec(ecPoint, spec);
             ECPublicKey ecPublicKey = new BCECPublicKey(ALGORITHM_EC, keySpec, BouncyCastleProvider.CONFIGURATION);
-
-            String encode = Base64.encode(ecPublicKey.getEncoded());
-            log.info("sm2PublicHexToPem ======================= pem: {}", encode);
-            return encode;
+            return Base64.encode(ecPublicKey.getEncoded());
         } catch (Exception e) {
-            log.error("sm2PublicHexToPem ======================= exception: {}", e.getMessage());
+            log.error("sm2PublicHexToPem exception: {}", e.getMessage());
         }
         return "";
     }
@@ -115,11 +107,9 @@ public class SmUtils extends SmUtil {
     public static String sm2PublicPemToHex(String publicKeyPem) {
         try {
             PublicKey publicKey = KeyUtil.generatePublicKey(ALGORITHM_EC, Base64.decode(publicKeyPem));
-            String publicKeyHex = HexUtil.encodeHexStr(((BCECPublicKey) publicKey).getQ().getEncoded(false));
-            log.info("sm2PublicPemToHex ======================= Hex: {}", publicKeyHex);
-            return publicKeyHex;
+            return HexUtil.encodeHexStr(((BCECPublicKey) publicKey).getQ().getEncoded(false));
         } catch (Exception e) {
-            log.error("sm2PublicPemToHex ======================= exception: {}", e.getMessage());
+            log.error("sm2PublicPemToHex exception: {}", e.getMessage());
         }
         return "";
     }
@@ -142,12 +132,9 @@ public class SmUtils extends SmUtil {
 
             BCECPublicKey publicKey = new BCECPublicKey(ALGORITHM_EC, ecPublicKeyParameters, ecNamedCurveSpec, BouncyCastleProvider.CONFIGURATION);
             BCECPrivateKey privateKey = new BCECPrivateKey(ALGORITHM_EC, ecPrivateKeyParameters, publicKey, ecNamedCurveSpec, BouncyCastleProvider.CONFIGURATION);
-
-            String encode = Base64.encode(privateKey.getEncoded());
-            log.info("sm2PrivateHexToPem ======================= pem: {}", encode);
-            return encode;
+            return Base64.encode(privateKey.getEncoded());
         } catch (Exception e) {
-            log.error("sm2PrivateHexToPem ======================= exception: {}", e.getMessage());
+            log.error("sm2PrivateHexToPem exception: {}", e.getMessage());
         }
         return "";
     }
@@ -161,11 +148,9 @@ public class SmUtils extends SmUtil {
     public static String sm2PrivatePemToHex(String privateKeyPem) {
         try {
             PrivateKey privateKey = KeyUtil.generatePrivateKey(ALGORITHM_EC, Base64.decode(privateKeyPem));
-            String privateKeyHex = HexUtil.encodeHexStr(BCUtil.encodeECPrivateKey(privateKey));
-            log.info("sm2PrivatePemToHex ======================= pem: {}", privateKeyHex);
-            return privateKeyHex;
+            return HexUtil.encodeHexStr(BCUtil.encodeECPrivateKey(privateKey));
         } catch (Exception e) {
-            log.error("sm2PrivatePemToHex ======================= exception: {}", e.getMessage());
+            log.error("sm2PrivatePemToHex exception: {}", e.getMessage());
         }
         return "";
     }
@@ -187,7 +172,7 @@ public class SmUtils extends SmUtil {
      *
      * @param publicKey - 公钥
      * @param data      - 原始数据
-     * @return Hex字符串
+     * @return Hex 字符串
      */
     public static String sm2EncryptHex(String publicKey, String data) {
         SM2 sm2 = SmUtil.sm2(null, publicKey);
@@ -211,7 +196,7 @@ public class SmUtils extends SmUtil {
      *
      * @param privateKey - 私钥
      * @param data       - 签名数据
-     * @return Hex字符串
+     * @return Hex 字符串
      */
     public static String sm2SignHex(String privateKey, String data) {
         byte[] dataBytes = data.getBytes();

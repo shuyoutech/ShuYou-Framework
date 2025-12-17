@@ -26,7 +26,7 @@ public class MessageSourceUtils {
             String port = env.getProperty("server.port");
             return host + ":" + port;
         } catch (UnknownHostException e) {
-            log.error("getMsgSource =============== exception:{}", e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return "";
     }

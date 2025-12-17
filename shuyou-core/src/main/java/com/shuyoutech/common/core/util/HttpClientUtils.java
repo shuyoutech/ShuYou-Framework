@@ -67,14 +67,14 @@ public class HttpClientUtils {
                         .setConnectionManager(connectionManager)//
                         .setRetryStrategy(new DefaultHttpRequestRetryStrategy(3, TimeValue.of(1, TimeUnit.SECONDS)))//
                         .evictExpiredConnections().build();
-            } catch (Exception e) {
-                log.error("init ==================== exception:{}", e.getMessage());
+            } catch (Exception exception) {
+                log.error(exception.getMessage(), exception);
             }
         }
     }
 
     /**
-     * 获取CloseableHttpClient单例
+     * 获取 CloseableHttpClient单例
      */
     public synchronized static CloseableHttpClient getInstance() {
         return SingletonHolder.httpclient;
@@ -83,7 +83,7 @@ public class HttpClientUtils {
     /**
      * 上送参数组装
      *
-     * @param paramsMap 上送参数Map
+     * @param paramsMap 上送参数
      * @return url
      */
     public static String encodeParameters(Map<String, Object> paramsMap) {
@@ -99,7 +99,7 @@ public class HttpClientUtils {
     }
 
     /**
-     * 组装url
+     * 组装 url
      *
      * @param url      请求地址
      * @param paramMap 请求参数
@@ -113,7 +113,7 @@ public class HttpClientUtils {
     }
 
     /**
-     * 发送get请求
+     * 发送 get 请求
      *
      * @param url 请求地址
      * @return 返回对象
@@ -124,7 +124,7 @@ public class HttpClientUtils {
     }
 
     /**
-     * 发送get请求
+     * 发送 get 请求
      *
      * @param url      请求地址
      * @param paramMap 请求参数
@@ -137,7 +137,7 @@ public class HttpClientUtils {
     }
 
     /**
-     * 发送get请求
+     * 发送 get 请求
      *
      * @param url 请求地址
      * @return 返回对象
@@ -151,7 +151,7 @@ public class HttpClientUtils {
     }
 
     /**
-     * 发送get请求
+     * 发送 get 请求
      *
      * @param url      请求地址
      * @param paramMap 请求参数
@@ -167,7 +167,7 @@ public class HttpClientUtils {
     }
 
     /**
-     * 发送get请求获取文件
+     * 发送 get 请求获取文件
      *
      * @param url 请求地址
      * @return 返回对象
@@ -201,7 +201,7 @@ public class HttpClientUtils {
     }
 
     /**
-     * 发送post请求
+     * 发送 post 请求
      *
      * @param url      请求地址
      * @param paramMap 请求参数
@@ -214,7 +214,7 @@ public class HttpClientUtils {
     }
 
     /**
-     * 发送put请求
+     * 发送 put 请求
      *
      * @param url      请求地址
      * @param paramMap 请求参数
@@ -226,7 +226,7 @@ public class HttpClientUtils {
     }
 
     /**
-     * 发送put请求
+     * 发送 put 请求
      *
      * @param url      请求地址
      * @param paramMap 请求参数
@@ -268,7 +268,7 @@ public class HttpClientUtils {
     }
 
     /**
-     * 执行http请求
+     * 执行 http 请求
      *
      * @param request 请求对象
      * @return T
@@ -278,19 +278,18 @@ public class HttpClientUtils {
             CloseableHttpClient httpClient = getInstance();
             return httpClient.execute(request, response -> {
                 if (response.getEntity() == null) {
-                    log.error("execute ==================== code:{}", response.getCode());
                     throw new BusinessException(ErrorCodeEnum.INTERNAL_SERVER_ERROR);
                 }
                 return EntityUtils.toString(response.getEntity());
             });
         } catch (Exception exception) {
-            log.error("execute ==================== exception:{}", exception.getMessage());
+            log.error(exception.getMessage(), exception);
             throw new BusinessException(ErrorCodeEnum.INTERNAL_SERVER_ERROR);
         }
     }
 
     /**
-     * 执行http请求
+     * 执行 http 请求
      *
      * @param request 请求对象
      * @return T
@@ -300,13 +299,12 @@ public class HttpClientUtils {
             CloseableHttpClient httpClient = getInstance();
             return httpClient.execute(request, response -> {
                 if (response.getEntity() == null) {
-                    log.error("executeToByteArray ==================== code:{}", response.getCode());
                     throw new BusinessException(ErrorCodeEnum.INTERNAL_SERVER_ERROR);
                 }
                 return EntityUtils.toByteArray(response.getEntity());
             });
         } catch (Exception exception) {
-            log.error("executeToByteArray ==================== exception:{}", exception.getMessage());
+            log.error(exception.getMessage(), exception);
         }
         return null;
     }

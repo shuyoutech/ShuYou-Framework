@@ -38,8 +38,8 @@ public class FileUtils extends FileUtil {
                 encodeName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
             }
             return encodeName.replaceAll("\\+", "%20");
-        } catch (Exception e) {
-            log.error("encodeFileName ===================== exception:{}", e.getMessage());
+        } catch (Exception exception) {
+            log.error(exception.getMessage(), exception);
         }
         return null;
     }
@@ -55,7 +55,7 @@ public class FileUtils extends FileUtil {
             response.addHeader(CommonConstants.HEADER_ACCESS_CONTROL_EXPOSE, "Content-Disposition,download-filename");
             response.setHeader(CommonConstants.HEADER_CONTENT_DISPOSITION, "attachment; filename=" + fileName);
         } catch (Exception e) {
-            log.error("setAttachmentResponseHeader ===================== exception:{}", e.getMessage());
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -88,8 +88,8 @@ public class FileUtils extends FileUtil {
      *
      * @param path       文件路径
      * @param separator  分隔符
-     * @param keyIndex   key索引
-     * @param valueIndex value索引
+     * @param keyIndex   索引
+     * @param valueIndex 索引
      * @return Map
      */
     public static Map<String, String> readUtf8LinesToMap(String path, CharSequence separator, int keyIndex, int valueIndex) {

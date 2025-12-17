@@ -593,7 +593,7 @@ public class RedissonUtils {
             lock.lock(timeoutMillis, TimeUnit.MILLISECONDS);
             return callable.call();
         } catch (Exception e) {
-            log.error("lock =============== error:{}", e.getMessage());
+            log.error(e.getMessage(), e);
         } finally {
             lock.unlock();
         }

@@ -58,7 +58,7 @@ public class RegionUtils {
             }
             return region;
         } catch (Exception e) {
-            log.error("getLocation ip:{},exception:{}", ip, e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return "";
     }
@@ -88,7 +88,7 @@ public class RegionUtils {
             }
             return CollectionUtils.join(list, " ");
         } catch (Exception e) {
-            log.error("getCity ip:{},exception:{}", ip, e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return "";
     }

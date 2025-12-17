@@ -32,7 +32,7 @@ public class PasswordCheckUtils {
     /**
      * 常用词库
      */
-    public static String[] SIMPLE_WORDS = {"admin", "szim", "epicrouter", "password", "grouter", "dare", "root", "guest", "user", "success", "pussy", "mustang", "fuckme", "jordan", "test", "hunter", "jennifer", "batman", "thomas", "soccer", "sexy", "killer", "george", "asshole", "fuckyou", "summer", "hello", "secret", "fucker", "enter", "cookie", "administrator", "xiaoming", "taobao", "iloveyou", "woaini", "982464", "monkey", "letmein", "trustno1", "dragon", "baseball", "master", "sunshine", "ashley", "bailey", "shadow", "superman", "football", "michael", "qazwsx"};
+    public static String[] SIMPLE_WORDS = {"admin", "szim", "epicrouter", "password", "grouter", "dare", "root", "guest", "user", "success", "pussy", "mustang", "jordan", "test", "hunter", "jennifer", "batman", "thomas", "soccer", "sexy", "killer", "george", "summer", "hello", "secret", "enter", "cookie", "administrator", "xiaoming", "taobao", "iloveyou", "woaini", "982464", "monkey", "letmein", "trustno1", "dragon", "baseball", "master", "sunshine", "ashley", "bailey", "shadow", "superman", "football", "michael", "qazwsx"};
 
     /**
      * 评估密码中包含的字符类型是否符合要求

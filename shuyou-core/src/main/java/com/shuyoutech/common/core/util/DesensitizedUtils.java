@@ -13,7 +13,7 @@ public class DesensitizedUtils extends DesensitizedUtil {
      * 显示首尾API KEY
      *
      * @param apiKey 密钥
-     * @return 脱敏后的key
+     * @return 脱敏后的 key
      */
     public static String apiKey(String apiKey) {
         if (StringUtils.isBlank(apiKey)) {
