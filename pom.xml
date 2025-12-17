@@ -6,7 +6,7 @@
 
     <groupId>com.shuyoutech</groupId>
     <artifactId>shuyou-framework</artifactId>
-    <version>${revision}</version>
+    <version>2026.0.0.0</version>
     <packaging>pom</packaging>
 
     <name>shuyou-framework</name>
@@ -289,7 +289,7 @@
             <dependency>
                 <groupId>com.alibaba.fastjson2</groupId>
                 <artifactId>fastjson2-extension-spring6</artifactId>
-                <version>${fastjson2.version}</version>
+                <version>${fastjson2-extension.version}</version>
             </dependency>
 
             <!-- 线程传递值 -->
