@@ -33,6 +33,7 @@ github地址：https://github.com/shuyoutech/ShuYou-Framework
 | 数游官方网址    | https://www.shuyoutech.com   |    |
 | Admin权限系统 | https://admin.shuyoutech.com |    |
 | AI应用系统    | https://ai.shuyoutech.com    |    |
+| AI应用系统    | https://lovmix.shuyoutech.com    |    |
 | API接口系统   | https://doc.shuyoutech.com   |    |
 | NAV导航系统   | https://nav.shuyoutech.com   |    |
 | Game游戏系统  | https://game.shuyoutech.com  |    |
