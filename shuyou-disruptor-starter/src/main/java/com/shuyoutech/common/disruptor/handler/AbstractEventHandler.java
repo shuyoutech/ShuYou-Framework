@@ -7,7 +7,7 @@ import com.shuyoutech.common.disruptor.event.DisruptorEvent;
  * disruptor 消息处理机制,Disruptor 定义的事件处理接口，由用户实现，用于处理事件，是 Consumer 的真正实现
  *
  * @author YangChao
- * @date 2025-04-06 18:24
+ * @since 2025-04-06 18:24
  **/
 public abstract class AbstractEventHandler implements EventHandler<DisruptorEvent> {
 

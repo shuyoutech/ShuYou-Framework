@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author YangChao
- * @date 2025-07-06 14:56
+ * @since 2025-07-06 14:56
  **/
 public class ValidateUtils extends cn.hutool.core.lang.Validator {
 

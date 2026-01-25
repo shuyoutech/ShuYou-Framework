@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * @author YangChao
- * @date 2025-08-16 09:36
+ * @since 2025-08-16 09:36
  **/
 public interface SuperMapper<T> extends BaseMapper<T> {
 

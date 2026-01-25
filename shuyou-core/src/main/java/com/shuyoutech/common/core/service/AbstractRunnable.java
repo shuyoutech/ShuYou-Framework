@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author YangChao
- * @date 2025-07-07 13:03
+ * @since 2025-07-07 13:03
  **/
 @Data
 public abstract class AbstractRunnable<E> implements Runnable {

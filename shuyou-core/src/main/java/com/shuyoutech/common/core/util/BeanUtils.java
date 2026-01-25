@@ -19,7 +19,7 @@ import java.util.Map;
  * 基于 cglib bean拷贝工具类
  *
  * @author YangChao
- * @date 2025-07-06 12:10
+ * @since 2025-07-06 12:10
  **/
 public class BeanUtils {
 

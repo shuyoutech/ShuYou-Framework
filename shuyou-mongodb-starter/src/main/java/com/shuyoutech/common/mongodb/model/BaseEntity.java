@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  * @author YangChao
- * @date 2025-08-14 13:45
+ * @since 2025-08-14 13:45
  **/
 @Data
 public class BaseEntity<T extends BaseEntity<T>> implements Serializable {

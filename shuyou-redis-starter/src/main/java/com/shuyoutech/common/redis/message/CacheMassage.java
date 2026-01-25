@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  * @author YangChao
- * @date 2025-08-06 17:23
+ * @since 2025-08-06 17:23
  **/
 @Data
 public class CacheMassage implements Serializable {

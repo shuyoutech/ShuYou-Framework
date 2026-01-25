@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @author YangChao
- * @date 2025-08-21 17:04
+ * @since 2025-08-21 17:04
  **/
 @Configuration
 @RequiredArgsConstructor

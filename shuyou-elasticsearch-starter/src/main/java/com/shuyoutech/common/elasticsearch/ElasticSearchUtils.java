@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  * <a href="https://github.com/elastic/elasticsearch">...</a>
  *
  * @author YangChao
- * @date 2025-08-13 20:52
+ * @since 2025-08-13 20:52
  **/
 @Slf4j
 public class ElasticSearchUtils {

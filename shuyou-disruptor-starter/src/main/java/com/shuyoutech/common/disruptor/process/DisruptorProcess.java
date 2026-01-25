@@ -12,7 +12,7 @@ import java.util.concurrent.ThreadFactory;
 
 /**
  * @author YangChao
- * @date 2025-04-06 18:29
+ * @since 2025-04-06 18:29
  **/
 @Slf4j
 public class DisruptorProcess {

@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
  * @author YangChao
- * @date 2025-08-14 13:45
+ * @since 2025-08-14 13:45
  **/
 @Data
 public class TreeEntity<T extends TreeEntity<T>> {

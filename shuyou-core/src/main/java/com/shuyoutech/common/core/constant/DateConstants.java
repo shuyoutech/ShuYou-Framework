@@ -6,7 +6,7 @@ import java.time.ZoneId;
  * 日期常量类
  *
  * @author YangChao
- * @date 2025-07-06 12:44
+ * @since 2025-07-06 12:44
  **/
 public interface DateConstants {
 

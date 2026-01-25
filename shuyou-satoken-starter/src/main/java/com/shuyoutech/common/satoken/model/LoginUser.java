@@ -10,7 +10,7 @@ import java.util.Set;
 
 /**
  * @author YangChao
- * @date 2025-07-07 16:58
+ * @since 2025-07-07 16:58
  **/
 @Data
 public class LoginUser implements Serializable {

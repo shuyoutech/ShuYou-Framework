@@ -57,7 +57,7 @@ import java.util.concurrent.TimeUnit;
  * </ul>
  *
  * @author YangChao
- * @date 2025-07-06 14:40
+ * @since 2025-07-06 14:40
  */
 @Slf4j
 public class HttpClientUtils {

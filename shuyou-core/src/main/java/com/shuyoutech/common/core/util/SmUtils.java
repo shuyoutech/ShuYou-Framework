@@ -34,7 +34,7 @@ import java.security.spec.ECPublicKeySpec;
  * SM 国密算法工具类
  *
  * @author YangChao
- * @date 2025-07-06 15:01
+ * @since 2025-07-06 15:01
  **/
 @Slf4j
 public class SmUtils extends SmUtil {

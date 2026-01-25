@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author YangChao
- * @date 2025-08-06 17:16
+ * @since 2025-08-06 17:16
  **/
 @Slf4j
 @EnableCaching

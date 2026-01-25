@@ -4,7 +4,7 @@ package com.shuyoutech.common.satoken.constant;
  * 安全相关通用常量
  *
  * @author YangChao
- * @date 2025-02-17 9:30
+ * @since 2025-02-17 9:30
  **/
 public class AuthConstants {
 

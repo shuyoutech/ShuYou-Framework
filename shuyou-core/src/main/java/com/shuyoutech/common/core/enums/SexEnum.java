@@ -5,7 +5,7 @@ import lombok.Getter;
 
 /**
  * @author YangChao
- * @date 2025-07-07 08:58
+ * @since 2025-07-07 08:58
  **/
 @Getter
 @AllArgsConstructor

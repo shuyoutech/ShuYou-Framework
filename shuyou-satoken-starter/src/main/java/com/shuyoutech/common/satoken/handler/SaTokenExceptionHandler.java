@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * @author YangChao
- * @date 2025-07-09 11:32
+ * @since 2025-07-09 11:32
  **/
 @Slf4j
 @RestControllerAdvice

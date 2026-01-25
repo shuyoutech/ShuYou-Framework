@@ -4,7 +4,7 @@ package com.shuyoutech.common.redis.constant;
  * 缓存常量类
  *
  * @author YangChao
- * @date 2025-04-06 16:46
+ * @since 2025-04-06 16:46
  **/
 public interface CacheConstants {
 

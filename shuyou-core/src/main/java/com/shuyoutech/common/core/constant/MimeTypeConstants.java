@@ -4,7 +4,7 @@ package com.shuyoutech.common.core.constant;
  * 媒体类型常量类
  *
  * @author YangChao
- * @date 2025-07-06 12:46
+ * @since 2025-07-06 12:46
  **/
 public interface MimeTypeConstants {
 

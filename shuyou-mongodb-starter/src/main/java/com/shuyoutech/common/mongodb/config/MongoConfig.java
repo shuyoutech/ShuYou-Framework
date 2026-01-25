@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 
 /**
  * @author YangChao
- * @date 2025-08-06 20:27
+ * @since 2025-08-06 20:27
  **/
 @Configuration
 @RequiredArgsConstructor

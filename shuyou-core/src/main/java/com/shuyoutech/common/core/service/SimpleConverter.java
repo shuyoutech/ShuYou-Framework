@@ -4,7 +4,7 @@ import com.shuyoutech.common.core.util.ConvertUtils;
 
 /**
  * @author YangChao
- * @date 2025-07-06 12:15
+ * @since 2025-07-06 12:15
  **/
 public class SimpleConverter  implements org.springframework.cglib.core.Converter {
 

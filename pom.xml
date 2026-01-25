@@ -51,14 +51,14 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <!-- Spring Boot Cloud Alibaba -->
-        <spring-boot.version>4.0.0</spring-boot.version>
+        <spring-boot.version>4.0.1</spring-boot.version>
         <spring-cloud.version>2025.1.0</spring-cloud.version>
         <spring-cloud-alibaba.version>2025.0.0.0</spring-cloud-alibaba.version>
 
         <!-- open common tool -->
         <lombok.version>1.18.42</lombok.version>
         <springdoc.version>3.0.0</springdoc.version>
-        <hutool.version>5.8.42</hutool.version>
+        <hutool.version>5.8.43</hutool.version>
         <mysql.version>9.5.0</mysql.version>
         <mybatis-plus.version>3.5.15</mybatis-plus.version>
         <p6spy.version>2.0.0</p6spy.version>
@@ -74,9 +74,9 @@
         <jjwt.version>0.13.0</jjwt.version>
         <httpclient5.version>5.5.1</httpclient5.version>
         <bcpkix-jdk18on.version>1.83</bcpkix-jdk18on.version>
-        <redisson.version>3.52.0</redisson.version>
+        <redisson.version>4.0.0</redisson.version>
         <jasypt-spring-boot-starter.version>3.0.5</jasypt-spring-boot-starter.version>
-        <ip2region.version>3.1.1</ip2region.version>
+        <ip2region.version>3.3.4</ip2region.version>
         <webmagic.version>1.0.3</webmagic.version>
         <satoken.version>1.44.0</satoken.version>
         <justauth.version>1.16.7</justauth.version>
@@ -84,6 +84,7 @@
         <aliyun.oss.version>3.18.2</aliyun.oss.version>
         <aliyun.dysmsapi.version>4.1.0</aliyun.dysmsapi.version>
         <aliyun.ocr.version>3.1.3</aliyun.ocr.version>
+        <aliyun.sdk.version>2.22.4</aliyun.sdk.version>
         <rocketmq.version>5.1.0</rocketmq.version>
         <alibaba.ai.version>1.0.0-M6.1</alibaba.ai.version>
         <langchain4j.version>1.9.1</langchain4j.version>
@@ -95,12 +96,16 @@
         <tinyflow.version>1.0.8</tinyflow.version>
         <okhttp.version>4.12.0</okhttp.version>
         <wechatpay.version>0.2.17</wechatpay.version>
-        <openai-java.version>4.12.0</openai-java.version>
-        <google.genai.version>1.31.0</google.genai.version>
+        <openai-java.version>4.13.0</openai-java.version>
+        <google.genai.version>1.32.0</google.genai.version>
+        <anthropic.version>2.11.1</anthropic.version>
+        <tencentcloud-sdk.version>3.1.1390</tencentcloud-sdk.version>
         <java-jwt.version>4.5.0</java-jwt.version>
         <hikaricp.version>7.0.2</hikaricp.version>
         <minio.version>8.5.17</minio.version>
-        <milvus.version>2.6.10</milvus.version>
+        <milvus.version>2.6.11</milvus.version>
+        <playwright.version>1.57.0</playwright.version>
+        <jave.version>3.5.0</jave.version>
     </properties>
 
     <modules>
@@ -113,6 +118,7 @@
         <module>shuyou-satoken-starter</module>
         <module>shuyou-elasticsearch-starter</module>
         <module>shuyou-milvus-starter</module>
+        <module>shuyou-web-starter</module>
     </modules>
 
     <!--  统一管理公共jar包引用 start -->
@@ -365,6 +371,12 @@
                 <version>${aliyun.ocr.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>dashscope-sdk-java</artifactId>
+                <version>${aliyun.sdk.version}</version>
+            </dependency>
+
             <!-- 离线IP地址定位库和IP定位数据 -->
             <dependency>
                 <groupId>org.lionsoul</groupId>
@@ -438,13 +450,6 @@
                 <version>${captcha.version}</version>
             </dependency>
 
-            <!-- Coze API SDK for Java -->
-            <dependency>
-                <groupId>com.coze</groupId>
-                <artifactId>coze-api</artifactId>
-                <version>${coze.version}</version>
-            </dependency>
-
             <dependency>
                 <groupId>com.github.wechatpay-apiv3</groupId>
                 <artifactId>wechatpay-java</artifactId>
@@ -461,6 +466,18 @@
                 <groupId>com.google.genai</groupId>
                 <artifactId>google-genai</artifactId>
                 <version>${google.genai.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.anthropic</groupId>
+                <artifactId>anthropic-java</artifactId>
+                <version>${anthropic.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tencentcloudapi</groupId>
+                <artifactId>tencentcloud-sdk-java</artifactId>
+                <version>${tencentcloud-sdk.version}</version>
             </dependency>
 
             <dependency>
@@ -495,6 +512,28 @@
                 <groupId>io.milvus</groupId>
                 <artifactId>milvus-sdk-java-bulkwriter</artifactId>
                 <version>${milvus.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.microsoft.playwright</groupId>
+                <artifactId>playwright</artifactId>
+                <version>${playwright.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ws.schild</groupId>
+                <artifactId>jave-core</artifactId>
+                <version>${jave.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ws.schild</groupId>
+                <artifactId>jave-nativebin-linux64</artifactId>
+                <version>${jave.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ws.schild</groupId>
+                <artifactId>jave-nativebin-win64</artifactId>
+                <version>${jave.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -534,6 +573,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -546,6 +586,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.6.3</version>
                 <configuration>
                     <additionalJOption>-Xdoclint:none</additionalJOption>
                 </configuration>
@@ -562,6 +603,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.14.1</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>

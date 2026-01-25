@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 
 /**
  * @author YangChao
- * @date 2025-07-09 11:36
+ * @since 2025-07-09 11:36
  **/
 @AutoConfiguration
 public class SaTokenConfiguration {

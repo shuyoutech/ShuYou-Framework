@@ -4,7 +4,7 @@ import com.shuyoutech.common.core.enums.BaseEnum;
 
 /**
  * @author YangChao
- * @date 2025-07-06 13:44
+ * @since 2025-07-06 13:44
  **/
 public class EnumUtils extends cn.hutool.core.util.EnumUtil {
 

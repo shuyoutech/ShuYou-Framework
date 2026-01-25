@@ -2,7 +2,7 @@ package com.shuyoutech.common.core.enums;
 
 /**
  * @author YangChao
- * @date 2025-07-05 20:10
+ * @since 2025-07-05 20:10
  **/
 public interface BaseEnum<K,V> {
 

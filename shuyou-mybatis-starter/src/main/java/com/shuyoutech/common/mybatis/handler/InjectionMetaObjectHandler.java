@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 /**
  * @author YangChao
- * @date 2025-08-17 22:50
+ * @since 2025-08-17 22:50
  **/
 @Slf4j
 public class InjectionMetaObjectHandler implements MetaObjectHandler {

@@ -43,7 +43,7 @@ import static com.shuyoutech.common.core.constant.EntityConstants.SQL_ID;
 
 /**
  * @author YangChao
- * @date 2025-04-06 20:26
+ * @since 2025-04-06 20:26
  **/
 @Slf4j
 public class MongoUtils {
@@ -71,6 +71,9 @@ public class MongoUtils {
      * @return 执行记录数
      */
     public static <E> Collection<E> insertBatch(Collection<E> list) {
+        if (CollectionUtils.isEmpty(list)) {
+            return list;
+        }
         return mongoTemplate.insertAll(list);
     }
 
@@ -91,6 +94,9 @@ public class MongoUtils {
      * @return 执行记录数
      */
     public static <E> Collection<E> saveBatch(Collection<E> list) {
+        if (CollectionUtils.isEmpty(list)) {
+            return list;
+        }
         try {
             return mongoTemplate.insertAll(list);
         } catch (DuplicateKeyException duplicateKeyException) {
@@ -151,6 +157,9 @@ public class MongoUtils {
      * @param list 实体集合
      */
     public static <E> void updateBatch(Collection<E> list) {
+        if (CollectionUtils.isEmpty(list)) {
+            return;
+        }
         Class<?> targetClass = CollectionUtils.getFirst(list).getClass();
         BulkOperations ops = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, targetClass);
         Update update;
@@ -174,6 +183,9 @@ public class MongoUtils {
      * @param list 实体集合
      */
     public static <E> void patchBatch(Collection<E> list) {
+        if (CollectionUtils.isEmpty(list)) {
+            return;
+        }
         Update update;
         Query query;
         Class<?> targetClass = CollectionUtils.getFirst(list).getClass();
@@ -250,6 +262,9 @@ public class MongoUtils {
      * @return 执行记录数
      */
     public static <E> long deleteByIds(Collection<? extends Serializable> ids, Class<E> clazz) {
+        if (CollectionUtils.isEmpty(ids)) {
+            return 0;
+        }
         Query query = new Query(Criteria.where(EntityConstants.NOSQL_ID).in(ids));
         DeleteResult deleteResult = mongoTemplate.remove(query, clazz);
         return deleteResult.getDeletedCount();

@@ -2,7 +2,7 @@ package com.shuyoutech.common.core.util;
 
 /**
  * @author YangChao
- * @date 2025-07-04 14:47
+ * @since 2025-07-04 14:47
  **/
 public class VersionUtils {
 

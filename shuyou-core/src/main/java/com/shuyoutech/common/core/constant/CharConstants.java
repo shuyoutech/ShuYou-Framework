@@ -4,7 +4,7 @@ package com.shuyoutech.common.core.constant;
  * 字符常量类
  *
  * @author YangChao
- * @date 2025-08-15 12:42
+ * @since 2025-08-15 12:42
  **/
 public interface CharConstants {
 

@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  * @author YangChao
- * @date 2025-08-15 15:18
+ * @since 2025-08-15 15:18
  **/
 @Data
 public class RedisMessage implements Serializable {

@@ -11,7 +11,7 @@ import java.text.DecimalFormat;
  * 格式化工具类
  *
  * @author YangChao
- * @date 2025-07-06 14:24
+ * @since 2025-07-06 14:24
  **/
 public class FormatUtils {
 

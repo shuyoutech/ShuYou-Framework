@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author YangChao
- * @date 2025-05-16 15:54
+ * @since 2025-05-16 15:54
  **/
 @Slf4j
 public class AuthUtils {

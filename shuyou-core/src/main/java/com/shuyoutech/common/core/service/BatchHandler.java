@@ -4,7 +4,7 @@ import java.util.Collection;
 
 /**
  * @author YangChao
- * @date 2025-07-06 14:48
+ * @since 2025-07-06 14:48
  **/
 @FunctionalInterface
 public interface BatchHandler {

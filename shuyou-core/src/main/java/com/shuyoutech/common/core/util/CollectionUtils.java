@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  * @author YangChao
- * @date 2025-07-06 14:43
+ * @since 2025-07-06 14:43
  **/
 public class CollectionUtils extends cn.hutool.core.collection.CollectionUtil {
 

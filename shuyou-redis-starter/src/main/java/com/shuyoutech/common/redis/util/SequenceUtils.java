@@ -16,7 +16,7 @@ import java.time.temporal.TemporalAccessor;
  * 发号器工具类
  *
  * @author YangChao
- * @date 2025-08-20 19:30
+ * @since 2025-08-20 19:30
  **/
 public class SequenceUtils {
 

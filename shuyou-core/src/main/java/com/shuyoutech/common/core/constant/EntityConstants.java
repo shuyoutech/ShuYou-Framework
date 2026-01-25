@@ -2,7 +2,7 @@ package com.shuyoutech.common.core.constant;
 
 /**
  * @author YangChao
- * @date 2025-07-06 15:39
+ * @since 2025-07-06 15:39
  **/
 public interface EntityConstants {
 

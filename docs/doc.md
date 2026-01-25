@@ -7,7 +7,13 @@
 | springcloud          | https://docs.spring.io/spring-cloud-release/reference/index.html   |    |
 | spring-cloud-alibaba | https://github.com/alibaba/spring-cloud-alibaba                    |    |
 | spring-ai            | https://github.com/spring-projects/spring-ai                       |    |
+| spring-projects      | https://github.com/spring-projects/spring-data-examples/tree/main  |    |
 |                      |                                                                    |    |
 |                      |                                                                    |    |
-|                      |                                                                    |    |
+
+## 第三方组件
+Milvus :
+https://milvus.io/api-reference/java/v2.5.x/About.md
+https://github.com/milvus-io/milvus
+https://gitee.com/dromara/MilvusPlus
 

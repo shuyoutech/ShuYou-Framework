@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  * @author YangChao
- * @date 2025-04-06 18:25
+ * @since 2025-04-06 18:25
  **/
 @Data
 public class DisruptorEvent implements Serializable {

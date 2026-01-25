@@ -24,7 +24,7 @@ import java.util.Map;
  * <a href="https://milvus.io/api-reference/java/v2.6.x">milvus</a>
  *
  * @author YangChao
- * @date 2025-08-24 11:53
+ * @since 2025-08-24 11:53
  **/
 @Slf4j
 public class MilvusUtils {

@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  * stream 流工具类
  *
  * @author YangChao
- * @date 2025-07-21 12:45
+ * @since 2025-07-21 12:45
  **/
 public class StreamUtils {
 

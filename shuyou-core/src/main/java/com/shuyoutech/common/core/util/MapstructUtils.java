@@ -1,16 +1,13 @@
 package com.shuyoutech.common.core.util;
 
-import com.shuyoutech.common.core.exception.BusinessException;
 import io.github.linpeilie.Converter;
 
 import java.util.List;
 import java.util.Map;
 
-import static com.shuyoutech.common.core.enums.ErrorCodeEnum.UNKNOWN;
-
 /**
  * @author YangChao
- * @date 2025-07-08 15:56
+ * @since 2025-07-08 15:56
  **/
 public class MapstructUtils {
 
@@ -25,7 +22,7 @@ public class MapstructUtils {
      */
     public static <T, V> V convert(T source, Class<V> targetType) {
         if (ObjectUtils.isNull(source) || ObjectUtils.isNull(targetType)) {
-            throw new BusinessException(UNKNOWN);
+            return null;
         }
         return CONVERTER.convert(source, targetType);
     }
@@ -39,7 +36,7 @@ public class MapstructUtils {
      */
     public static <T, V> V convert(T source, V target) {
         if (ObjectUtils.isNull(source) || ObjectUtils.isNull(target)) {
-            throw new BusinessException(UNKNOWN);
+            return null;
         }
         return CONVERTER.convert(source, target);
     }
@@ -53,7 +50,7 @@ public class MapstructUtils {
      */
     public static <T, V> List<V> convert(List<T> sourceList, Class<V> targetType) {
         if (ObjectUtils.isNull(targetType) || CollectionUtils.isEmpty(sourceList)) {
-            throw new BusinessException(UNKNOWN);
+            return null;
         }
         return CONVERTER.convert(sourceList, targetType);
     }
@@ -63,11 +60,11 @@ public class MapstructUtils {
      *
      * @param map       数据来源
      * @param beanClass bean类
-     * @return bean对象
+     * @return bean
      */
     public static <T> T convert(Map<String, Object> map, Class<T> beanClass) {
         if (MapUtils.isEmpty(map) || ObjectUtils.isNull(beanClass)) {
-            throw new BusinessException(UNKNOWN);
+            return null;
         }
         return CONVERTER.convert(map, beanClass);
     }

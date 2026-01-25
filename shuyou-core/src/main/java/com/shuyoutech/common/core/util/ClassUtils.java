@@ -4,7 +4,7 @@ import java.util.Collection;
 
 /**
  * @author YangChao
- * @date 2025-07-06 13:39
+ * @since 2025-07-06 13:39
  **/
 public class ClassUtils extends cn.hutool.core.util.ClassUtil {
 

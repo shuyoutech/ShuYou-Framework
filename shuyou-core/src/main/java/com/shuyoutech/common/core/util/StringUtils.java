@@ -7,7 +7,7 @@ import static cn.hutool.core.util.ReUtil.RE_CHINESES;
 
 /**
  * @author YangChao
- * @date 2025-07-06 12:11
+ * @since 2025-07-06 12:11
  **/
 public class StringUtils extends StrUtil {
 

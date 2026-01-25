@@ -7,7 +7,7 @@ import lombok.Getter;
  * 通用状态枚举
  *
  * @author YangChao
- * @date 2025-07-05 20:18
+ * @since 2025-07-05 20:18
  **/
 @Getter
 @AllArgsConstructor

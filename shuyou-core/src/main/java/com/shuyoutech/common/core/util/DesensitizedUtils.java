@@ -5,7 +5,7 @@ import cn.hutool.core.util.StrUtil;
 
 /**
  * @author YangChao
- * @date 2025-09-18 14:03
+ * @since 2025-09-18 14:03
  **/
 public class DesensitizedUtils extends DesensitizedUtil {
 

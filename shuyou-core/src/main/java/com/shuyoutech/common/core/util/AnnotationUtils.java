@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 
 /**
  * @author YangChao
- * @date 2025-07-05 20:43
+ * @since 2025-07-05 20:43
  **/
 public class AnnotationUtils extends cn.hutool.core.annotation.AnnotationUtil {
 

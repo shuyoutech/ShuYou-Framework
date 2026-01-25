@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * @author YangChao
- * @date 2025-03-26 21:42
+ * @since 2025-03-26 21:42
  **/
 @Data
 public class DisruptorData implements Serializable {

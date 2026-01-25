@@ -46,7 +46,7 @@ import static com.shuyoutech.common.disruptor.handler.ConsumerEventHandler.DISRU
  * </ul>
  *
  * @author YangChao
- * @date 2025-07-19 12:09
+ * @since 2025-07-19 12:09
  */
 @Slf4j
 @Component

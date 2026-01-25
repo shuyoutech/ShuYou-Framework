@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * @author YangChao
- * @date 2025-07-06 14:53
+ * @since 2025-07-06 14:53
  **/
 public class PasswordCheckUtils {
 

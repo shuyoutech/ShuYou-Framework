@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author YangChao
- * @date 2025-07-06 15:29
+ * @since 2025-07-06 15:29
  **/
 @Component
 public class SpringUtils extends cn.hutool.extra.spring.SpringUtil {

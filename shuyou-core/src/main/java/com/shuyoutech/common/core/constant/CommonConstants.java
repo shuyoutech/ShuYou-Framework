@@ -4,7 +4,7 @@ package com.shuyoutech.common.core.constant;
  * 公共的常量类
  *
  * @author YangChao
- * @date 2025-08-15 12:23
+ * @since 2025-08-15 12:23
  **/
 public interface CommonConstants {
 

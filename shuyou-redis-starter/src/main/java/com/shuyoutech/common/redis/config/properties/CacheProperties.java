@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @author YangChao
- * @date 2025-08-06 17:17
+ * @since 2025-08-06 17:17
  **/
 @Data
 @ConfigurationProperties(prefix = "shuyoutech.cache")

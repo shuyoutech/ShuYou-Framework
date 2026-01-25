@@ -4,7 +4,7 @@ package com.shuyoutech.common.core.constant;
  * 数值常量类
  *
  * @author YangChao
- * @date 2025-07-06 12:50
+ * @since 2025-07-06 12:50
  **/
 public interface NumberConstants {
 
