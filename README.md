@@ -28,8 +28,7 @@ ShuYou-Framework微服务脚手架，采用SpringBoot4.0、SpringCloud2025、Ali
 |-----------|-------------------------------|----|
 | 数游官方网址    | https://www.shuyoutech.com    |    |
 | Admin权限系统 | https://admin.shuyoutech.com  |    |
-| AI应用系统    | https://ai.shuyoutech.com     |    |
-| AI应用系统    | https://lovmix.shuyoutech.com |    |
+| AI应用系统    | https://shuyou.ai     |    |
 | API接口系统   | https://doc.shuyoutech.com    |    |
 | NAV导航系统   | https://nav.shuyoutech.com    |    |
 | Game游戏系统  | https://game.shuyoutech.com   |    |
